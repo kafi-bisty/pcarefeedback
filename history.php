@@ -97,7 +97,7 @@ $total_archived = mysqli_num_rows($result);
     <header class="hospital-header">
         <img src="images/logo.png" alt="Hospital Logo">
         <h1>পেশেন্ট কেয়ার হাসপাতাল এন্ড ডায়াগনস্টিক সেন্টার</h1>
-        <p style="margin: 5px 0 0; font-size: 13px; opacity: 0.9;"><i class="fas fa-map-marker-alt"></i> দীনু মঞ্জিল, কলেজ রোড, বরগুনা</p>
+        <p style="margin: 5px 0 0; font-size: 13px; opacity: 0.9;"><i class="fas fa-map-marker-alt"></i>  কলেজ রোড, বরগুনা</p>
     </header>
 
     <div class="container">

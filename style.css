@@ -1,0 +1,143 @@
+/* ১. কালার ভ্যারিয়েবল সেটিংস */
+:root {
+    /* লাইট মোড (Default) */
+    --bg-color: #f4f7fa;
+    --card-bg: #ffffff;
+    --text-color: #2f3542;
+    --input-bg: #f8fafc;
+    --border-color: #ddd;
+    --shadow: 0 5px 15px rgba(0,0,0,0.08);
+    --neon-blue: #00f2fe;
+    --primary-teal: #00A8B5;
+}
+
+/* ডার্ক মোড সেটিংস */
+body.dark-mode {
+    --bg-color: #0D1B3E; /* লোগোর নেভি ব্লু */
+    --card-bg: #1e293b;
+    --text-color: #f1f5f9;
+    --input-bg: #334155;
+    --border-color: #475569;
+    --shadow: 0 10px 30px rgba(0,0,0,0.3);
+}
+
+/* ২. গ্লোবাল বডি স্টাইল */
+body { 
+    font-family: 'Hind Siliguri', sans-serif; 
+    background-color: var(--bg-color); 
+    color: var(--text-color); 
+    display: flex; 
+    flex-direction: column;
+    align-items: center; 
+    padding: 20px; 
+    transition: background-color 0.4s, color 0.4s;
+    margin: 0;
+}
+
+/* ৩. কন্টেইনার এবং কার্ড ডিজাইন */
+.landing-container, 
+.form-container, 
+.login-box, 
+.admin-container, 
+.stat-card, 
+.register-page { 
+    background-color: var(--card-bg) !important; 
+    color: var(--text-color) !important;
+    padding: 30px; 
+    border-radius: 15px; 
+    box-shadow: var(--shadow); 
+    width: 100%; 
+    max-width: 800px; 
+    text-align: center; 
+    margin-bottom: 20px;
+    box-sizing: border-box;
+}
+
+/* ৪. ইনপুট, সিলেক্ট এবং টেক্সট এরিয়া */
+input, select, textarea { 
+    width: 100%; 
+    padding: 12px; 
+    margin: 10px 0; 
+    background-color: var(--input-bg) !important;
+    color: var(--text-color) !important;
+    border: 1px solid var(--border-color) !important;
+    border-radius: 10px; 
+    box-sizing: border-box; 
+    outline: none;
+    transition: 0.3s;
+}
+
+input:focus, textarea:focus {
+    border-color: var(--primary-teal) !important;
+}
+
+/* ৫. বাটন ডিজাইন */
+.btn, .submit-btn { 
+    padding: 15px 20px; 
+    text-decoration: none; 
+    border-radius: 10px; 
+    color: white; 
+    font-weight: bold; 
+    font-size: 1.1rem; 
+    display: inline-block;
+    cursor: pointer;
+    border: none;
+    transition: 0.3s;
+}
+
+.btn:hover, .submit-btn:hover {
+    transform: translateY(-2px);
+    opacity: 0.9;
+}
+
+/* বিশেষ বাটনের কালার */
+.btn-praise, .Praise-bg { background: #28a745; }
+.btn-complaint, .Complaint-bg { background: #dc3545; }
+
+/* ৬. টেবিল ডিজাইন */
+table { 
+    width: 100%; 
+    border-collapse: collapse; 
+    margin-top: 20px; 
+    background-color: var(--card-bg);
+}
+
+th, td { 
+    border-bottom: 1px solid var(--border-color); 
+    padding: 12px; 
+    text-align: left; 
+}
+
+th { background-color: rgba(0,0,0,0.03); }
+
+/* ডার্ক মোডে টেবিল রো অ্যাডজাস্টমেন্ট */
+body.dark-mode table tr {
+    background-color: var(--card-bg) !important;
+    color: var(--text-color) !important;
+}
+
+/* টাইপ অনুযায়ী রো কালার */
+.Praise { background-color: #e8f5e9; color: #1e293b; }
+.Complaint { background-color: #ffebee; color: #1e293b; }
+
+body.dark-mode .Praise { background-color: rgba(40, 167, 69, 0.15); color: #f1f5f9; }
+body.dark-mode .Complaint { background-color: rgba(220, 53, 69, 0.15); color: #f1f5f9; }
+
+/* ৭. অন্যান্য ছোট এলিমেন্ট */
+.logout-link { 
+    float: right; 
+    font-size: 14px; 
+    color: #ff4757; 
+    text-decoration: none; 
+    font-weight: bold;
+}
+
+#digital-clock {
+    transition: 0.5s;
+}
+
+/* ডার্ক মোডে ঘড়ির স্পেশাল গ্লো */
+body.dark-mode #digital-clock {
+    color: var(--neon-blue) !important;
+    text-shadow: 0 0 15px var(--neon-blue), 0 0 30px var(--neon-blue);
+}

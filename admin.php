@@ -206,32 +206,6 @@ $inspections_result = mysqli_query($conn, "SELECT * FROM hospital_inspections WH
 
 
 
-        
-       /* লোগো সার্কেল অ্যাডজাস্টমেন্ট */
-.logo-wrapper {
-    width: 140px;             /* আপনার পছন্দমতো সাইজ */
-    height: 140px;
-    margin: 0 auto 20px;
-    background: #fff;         /* লোগোর ভেতরের সাদা রঙের সাথে মিল রাখা হয়েছে */
-    border-radius: 50%;       /* একদম গোল করার জন্য */
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    overflow: hidden;         /* এটি চারকোনা কোণাগুলো কেটে দেবে */
-    border: 5px solid var(--logo-circle-border); /* লোগোর টিল কালার বর্ডার */
-    box-shadow: 0 10px 25px rgba(0,0,0,0.2);
-}
-
-.logo-img {
-    width: 100%;              /* পুরো গোল জায়গাটি দখল করবে */
-    height: 100%;
-    object-fit: cover;        /* লোগোটিকে গোল ফ্রেমের ভেতরে সুন্দরভাবে ফিট করবে */
-    padding: 0;               /* কোনো বাড়তি জায়গা রাখবে না */
-}
-
-
-
-
 
 
         /* Modal */

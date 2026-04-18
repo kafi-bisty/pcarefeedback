@@ -7,7 +7,7 @@ if ($host_name == 'localhost') {
     $host = "localhost";
     $user = "root";
     $pass = "";
-    $dbname = "hospital_db"; // আপনার লোকাল ডাটাবেস নাম
+    $dbname = "hospitalss_db"; // আপনার লোকাল ডাটাবেস নাম
 } else {
     // --- অনলাইন সার্ভার সেটিংস (InfinityFree) ---
     // এই তথ্যগুলো আপনার InfinityFree কন্ট্রোল প্যানেল (MySQL Databases) থেকে পাবেন

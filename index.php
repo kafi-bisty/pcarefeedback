@@ -15,21 +15,22 @@
             --bg-gradient: linear-gradient(135deg, #0D1B3E 0%, #00A8B5 100%);
             --white: #ffffff;
             --gold: #ED8F03;
-            --gold-grad: linear-gradient(135deg, #FFB75E 0%, #ED8F03 100%);
             --neon-blue: #00f2fe;
-            --text-main: #1e293b;
             --card-bg: #ffffff;
+            --text-main: #1e293b;
+            --logo-circle-border: rgba(0, 168, 181, 0.2);
         }
 
-        /* ডার্ক মোড ভ্যারিয়েবল ওভাররাইড */
+        /* ডার্ক মোড ভ্যারিয়েবল */
         body.dark-mode {
             --bg-gradient: linear-gradient(135deg, #020617 0%, #0f172a 100%);
             --white: #1e293b;
             --text-main: #f1f5f9;
             --card-bg: #0f172a;
+            --logo-circle-border: rgba(0, 242, 254, 0.4);
         }
 
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Hind Siliguri', sans-serif; transition: background 0.4s, color 0.4s; }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Hind Siliguri', sans-serif; transition: all 0.3s ease; }
 
         body {
             background: var(--bg-gradient);
@@ -38,146 +39,166 @@
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            padding: 15px;
+            padding: 10px;
             color: var(--text-main);
         }
 
-        /* --- Top Bar: Clock, Theme & Language --- */
+        /* --- Top Bar: Responsive Grid --- */
         .top-bar {
             width: 100%;
-            max-width: 500px;
+            max-width: 450px;
             display: flex;
             justify-content: space-between;
             align-items: center;
             margin-bottom: 20px;
             background: rgba(255, 255, 255, 0.1);
-            padding: 10px 15px;
+            padding: 12px 15px;
             border-radius: 25px;
             backdrop-filter: blur(10px);
             border: 1px solid rgba(255, 255, 255, 0.2);
+            flex-wrap: wrap;
+            gap: 10px;
         }
 
         #digital-clock {
             font-family: 'Orbitron', sans-serif;
             color: #fff;
-            font-size: 15px;
+            font-size: 14px;
             font-weight: 700;
         }
 
-        /* ডার্ক মোড অন হলে ঘড়ির নিওন গ্লো */
         body.dark-mode #digital-clock {
-            color: var(--neon-blue) !important;
-            text-shadow: 0 0 10px var(--neon-blue), 0 0 20px var(--neon-blue);
+            color: var(--neon-blue);
+            text-shadow: 0 0 10px var(--neon-blue);
         }
 
-        .top-actions { display: flex; align-items: center; gap: 15px; }
+        .top-actions { display: flex; align-items: center; gap: 10px; }
 
-        .theme-toggle {
+        .theme-toggle, .lang-container {
             cursor: pointer;
-            font-size: 18px;
+            font-size: 13px;
             color: var(--gold);
             display: flex;
             align-items: center;
             gap: 5px;
+            background: rgba(255,255,255,0.1);
+            padding: 5px 10px;
+            border-radius: 15px;
         }
 
-        .lang-container {
-            display: flex;
-            align-items: center;
-            gap: 5px;
-            color: white;
-        }
         .lang-container select {
             background: transparent;
             color: white;
-            border: 1px solid rgba(255,255,255,0.5);
-            padding: 3px 8px;
-            border-radius: 10px;
-            cursor: pointer;
+            border: none;
             outline: none;
-            font-size: 13px;
+            font-size: 12px;
+            font-weight: bold;
         }
         .lang-container select option { color: #333; }
 
-        /* --- Main Container --- */
+        /* --- Main Container: Mobile Responsive --- */
         .landing-container {
             background: var(--card-bg);
-            padding: 40px 25px;
-            border-radius: 40px;
-            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.4);
-            max-width: 420px;
+            padding: 30px 20px;
+            border-radius: 35px;
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.4);
+            max-width: 400px;
             width: 100%;
             text-align: center;
             border: 1px solid rgba(255, 255, 255, 0.1);
             animation: fadeIn 0.8s ease-out;
         }
 
-        @keyframes fadeIn { from { transform: scale(0.95); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+        @keyframes fadeIn { from { transform: translateY(20px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
 
-        .logo-img { max-width: 180px; height: auto; margin-bottom: 20px; display: block; margin-left: auto; margin-right: auto; }
+       /* লোগো সার্কেল অ্যাডজাস্টমেন্ট */
+.logo-wrapper {
+    width: 140px;             /* আপনার পছন্দমতো সাইজ */
+    height: 140px;
+    margin: 0 auto 20px;
+    background: #fff;         /* লোগোর ভেতরের সাদা রঙের সাথে মিল রাখা হয়েছে */
+    border-radius: 50%;       /* একদম গোল করার জন্য */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;         /* এটি চারকোনা কোণাগুলো কেটে দেবে */
+    border: 5px solid var(--logo-circle-border); /* লোগোর টিল কালার বর্ডার */
+    box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+}
 
-        h1 { font-size: 22px; color: var(--logo-teal); margin-bottom: 5px; font-weight: 800; line-height: 1.3; }
+.logo-img {
+    width: 100%;              /* পুরো গোল জায়গাটি দখল করবে */
+    height: 100%;
+    object-fit: cover;        /* লোগোটিকে গোল ফ্রেমের ভেতরে সুন্দরভাবে ফিট করবে */
+    padding: 0;               /* কোনো বাড়তি জায়গা রাখবে না */
+}
+        h1 { font-size: 18px; color: var(--logo-teal); margin-bottom: 5px; font-weight: 800; line-height: 1.3; }
         body.dark-mode h1 { color: var(--neon-blue); }
-        
-        .address { font-size: 14px; color: #64748b; margin-bottom: 30px; font-weight: 600; }
+        .address { font-size: 12px; color: #64748b; margin-bottom: 25px; font-weight: 600; }
 
-        /* Choice Buttons */
-        .choice-box { display: flex; flex-direction: column; gap: 12px; }
+        /* Buttons */
+        .choice-box { display: flex; flex-direction: column; gap: 10px; }
         .btn {
             display: flex; align-items: center; justify-content: space-between;
-            padding: 16px 22px; border-radius: 20px;
-            text-decoration: none; font-size: 17px; font-weight: 700; color: white;
-            transition: 0.3s;
-            box-shadow: 0 6px 15px rgba(0,0,0,0.1);
+            padding: 14px 18px; border-radius: 18px;
+            text-decoration: none; font-size: 15px; font-weight: 700; color: white;
+            box-shadow: 0 6px 12px rgba(0,0,0,0.1);
         }
-        .btn:hover { transform: translateY(-3px); box-shadow: 0 10px 20px rgba(0,0,0,0.2); }
+        .btn:active { transform: scale(0.96); }
 
-        .btn-praise { background: linear-gradient(135deg, #28a745 0%, var(--logo-teal) 100%); }
+        .btn-praise { background: linear-gradient(135deg, #28a745 0%, #00A8B5 100%); }
         .btn-complaint { background: linear-gradient(135deg, #dc3545 0%, #ff6b6b 100%); }
-        .btn-track { background: linear-gradient(135deg, var(--logo-navy) 0%, var(--logo-teal) 100%); }
-        .btn-inspection { background: var(--gold-grad); border: 1px solid #d48600; }
+        .btn-track { background: linear-gradient(135deg, #0D1B3E 0%, #0056b3 100%); }
+        .btn-inspection { background: linear-gradient(135deg, #FFB75E 0%, #ED8F03 100%); }
 
         /* Owner Card */
         .owner-trigger {
-            margin-top: 35px;
+            margin-top: 25px;
             background: rgba(148, 163, 184, 0.1);
-            padding: 12px;
+            padding: 10px;
             border-radius: 20px;
             display: flex;
             align-items: center;
-            gap: 15px;
+            gap: 12px;
             cursor: pointer;
-            border: 1px solid #eee;
-            transition: 0.3s;
+            border: 1px solid rgba(148, 163, 184, 0.2);
         }
-        body.dark-mode .owner-trigger { border-color: #334155; }
-        .owner-thumb { width: 50px; height: 50px; border-radius: 50%; object-fit: cover; border: 2px solid var(--logo-teal); }
-        .owner-info-text b { color: var(--text-main); font-size: 15px; display: block; }
-        .owner-info-text span { color: var(--logo-teal); font-size: 12px; font-weight: bold; }
+        .owner-thumb { width: 45px; height: 45px; border-radius: 50%; object-fit: cover; border: 2px solid var(--logo-teal); }
+        .owner-info-text b { color: var(--text-main); font-size: 14px; display: block; text-align: left; }
+        .owner-info-text span { color: var(--logo-teal); font-size: 11px; font-weight: bold; display: block; text-align: left; }
 
         /* Modal Styles */
         .modal { display: none; position: fixed; z-index: 2000; left: 0; top: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); backdrop-filter: blur(10px); }
         .modal-content {
-            background: var(--card-bg); margin: 10vh auto; border-radius: 40px; width: 90%; max-width: 400px;
-            overflow: hidden; position: relative; animation: slideIn 0.4s;
+            background: var(--card-bg); margin: 8vh auto; border-radius: 35px; width: 90%; max-width: 380px;
+            overflow: hidden; position: relative; animation: slideIn 0.4s ease-out;
         }
         @keyframes slideIn { from { transform: translateY(50px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
-        .modal-header { background: var(--logo-navy); padding: 50px 20px; text-align: center; color: white; position: relative; }
-        .modal-close { position: absolute; right: 20px; top: 15px; color: white; font-size: 24px; cursor: pointer; }
         
-        .owner-img-container { width: 150px; height: 150px; border-radius: 50%; border: 6px solid var(--card-bg); margin: 0 auto; margin-top: -75px; position: relative; z-index: 10; overflow: hidden; background: #fff; box-shadow: 0 10px 20px rgba(0,0,0,0.2); }
+        .modal-close { position: absolute; right: 15px; top: 15px; color: white; font-size: 22px; cursor: pointer; background: rgba(0,0,0,0.3); width: 30px; height: 30px; border-radius: 50%; display: flex; align-items: center; justify-content: center; z-index: 20; }
+        
+        .owner-img-container { width: 130px; height: 130px; border-radius: 50%; border: 5px solid var(--card-bg); margin: 0 auto; margin-top: -65px; position: relative; z-index: 10; overflow: hidden; background: #fff; box-shadow: 0 10px 20px rgba(0,0,0,0.2); }
         .owner-img-full { width: 100%; height: 100%; object-fit: cover; object-position: top; }
 
-        .modal-body { padding: 20px 25px 30px; text-align: center; color: var(--text-main); }
-        .detail-row { display: flex; align-items: center; gap: 12px; background: rgba(148, 163, 184, 0.1); padding: 12px; border-radius: 15px; margin-bottom: 10px; text-align: left; font-size: 14px; font-weight: 600; }
-        .detail-row i { color: var(--logo-teal); width: 20px; text-align: center; }
+        .modal-body { padding: 15px 20px 25px; text-align: center; color: var(--text-main); }
+        .detail-row { display: flex; align-items: center; gap: 10px; background: rgba(148, 163, 184, 0.1); padding: 10px; border-radius: 12px; margin-bottom: 8px; text-align: left; font-size: 13px; font-weight: 600; }
+        .detail-row i { color: var(--logo-teal); width: 18px; text-align: center; }
 
-        @media (max-width: 480px) { h1 { font-size: 19px; } }
+        .footer-text { margin-top: 20px; font-size: 10px; color: #94a3b8; font-weight: bold; }
+
+        /* মোবাইল স্ক্রিনের জন্য বিশেষ টিউনিং */
+        @media (max-width: 380px) {
+            .landing-container { padding: 20px 15px; }
+            h1 { font-size: 16px; }
+            .btn { font-size: 13px; padding: 12px 15px; }
+            .logo-wrapper { width: 110px; height: 110px; }
+            #digital-clock { font-size: 12px; }
+        }
     </style>
 </head>
 <body>
 
-    <!-- Top Info Bar -->
+    <!-- Top Bar -->
     <div class="top-bar">
         <div id="digital-clock">00:00:00 AM</div>
         
@@ -185,7 +206,7 @@
             <!-- ডার্ক মোড বাটন -->
             <div class="theme-toggle" onclick="toggleDarkMode()">
                 <i id="theme-icon" class="fas fa-moon"></i> 
-                <span id="theme-text" style="font-size: 12px; font-weight: bold;">ডার্ক মোড</span>
+                <span id="theme-text" style="display: none;">ডার্ক</span>
             </div>
 
             <!-- ল্যাঙ্গুয়েজ সিলেক্টর -->
@@ -193,15 +214,17 @@
                 <i class="fas fa-globe"></i>
                 <select id="langSelector" onchange="changeLanguage()">
                     <option value="bn">বাংলা</option>
-                    <option value="en">English</option>
+                    <option value="en">EN</option>
                 </select>
             </div>
         </div>
     </div>
 
     <div class="landing-container">
-        <!-- Hospital Logo -->
-        <img src="images/logo.png" alt="Logo" class="logo-img">
+        <!-- লোগো সার্কেল অ্যাডজাস্ট করা হয়েছে -->
+        <div class="logo-wrapper">
+            <img src="images/logo.png" alt="Logo" class="logo-img">
+        </div>
 
         <h1 id="hospital-name">পেশেন্ট কেয়ার হাসপাতাল এন্ড ডায়াগনস্টিক সেন্টার</h1>
         <p class="address" id="hospital-addr">কলেজ রোড, বরগুনা</p>
@@ -216,7 +239,7 @@
                 <i class="fas fa-chevron-right"></i>
             </a>
             <a href="track.php" class="btn btn-track">
-                <span><i class="fas fa-search"></i> &nbsp; <span id="txt-track">অভিযোগের/প্রশংসার আপডেট দেখুন</span></span>
+                <span><i class="fas fa-search"></i> &nbsp; <span id="txt-track">আপডেট দেখুন</span></span>
                 <i class="fas fa-chevron-right"></i>
             </a>
             <a href="inspection_form.php" class="btn btn-inspection">
@@ -231,14 +254,18 @@
                 <b id="txt-owner-name">ডাঃ মো: নাজমুস সাকিব</b>
                 <span id="txt-owner-title">হাসপাতাল মালিক (বিস্তারিত)</span>
             </div>
-            <i class="fas fa-info-circle" style="margin-left: auto; color: #ccc;"></i>
+            <i class="fas fa-info-circle" style="margin-left: auto; color: var(--logo-teal);"></i>
+        </div>
+
+        <div class="footer-text">
+            © ২০২৪ Patient Care Hospital | Barguna
         </div>
     </div>
 
     <!-- Owner Modal -->
     <div id="ownerModal" class="modal">
         <div class="modal-content">
-            <div class="modal-header">
+            <div style="background: var(--logo-navy); padding: 40px 20px; text-align: center;">
                 <span class="modal-close" onclick="toggleModal(false)">&times;</span>
             </div>
             <div class="owner-img-container">
@@ -246,9 +273,9 @@
             </div>
             <div class="modal-body">
                 <h2 id="modal-name">ডাঃ মো: নাজমুস সাকিব</h2>
-                <p style="color: var(--logo-teal); font-weight: bold; margin-bottom: 20px;" id="modal-title">স্বত্বাধিকারী ও চিকিৎসক</p>
-                <div class="detail-row"><i class="fas fa-hospital"></i> <span id="modal-hosp">পেশেন্ট কেয়ার হাসপাতাল এন্ড ডায়াগনস্টিক সেন্টার</span></div>
-                <div class="detail-row"><i class="fas fa-map-marker-alt"></i> <span id="modal-loc">দীনু মঞ্জিল, কলেজ রোড, বরগুনা</span></div>
+                <p style="color: var(--logo-teal); font-weight: bold; margin-bottom: 15px; font-size: 13px;" id="modal-title">স্বত্বাধিকারী ও চিকিৎসক</p>
+                <div class="detail-row"><i class="fas fa-hospital"></i> <span id="modal-hosp" style="font-size: 11px;">পেশেন্ট কেয়ার হাসপাতাল এন্ড ডায়াগনস্টিক সেন্টার</span></div>
+                <div class="detail-row"><i class="fas fa-map-marker-alt"></i> <span id="modal-loc"> কলেজ রোড, বরগুনা</span></div>
                 <div class="detail-row"><i class="fas fa-heart"></i> <span id="modal-msg">রোগী সেবায় আমরা সর্বদা প্রতিশ্রুতিবদ্ধ</span></div>
             </div>
         </div>
@@ -290,24 +317,20 @@
 
         function updateThemeUI(isDark) {
             const icon = document.getElementById('theme-icon');
-            const text = document.getElementById('theme-text');
             if (isDark) {
                 icon.classList.replace('fa-moon', 'fa-sun');
-                text.innerText = "লাইট মোড";
                 icon.style.color = "#FFB75E";
             } else {
                 icon.classList.replace('fa-sun', 'fa-moon');
-                text.innerText = "ডার্ক মোড";
                 icon.style.color = "#ED8F03";
             }
         }
 
-        // Language Logic
         function toggleModal(show) { document.getElementById("ownerModal").style.display = show ? "block" : "none"; }
 
         const translations = {
-            en: { hName: "Patient Care Hospital & Diagnostic Centre", hAddr: "College Road, Barguna", praise: "Praise for Good Work", complaint: "Complaint for Bad Behavior", track: "Track Status", inspection: "Inspection Book", oName: "Dr. Nazmus Sakib", oTitle: "Hospital Owner (Details)", mName: "Dr. Nazmus Sakib", mTitle: "Proprietor & Physician", mLoc: "College Road, Barguna", mMsg: "Committed to patient care" },
-            bn: { hName: "পেশেন্ট কেয়ার হাসপাতাল এন্ড ডায়াগনস্টিক সেন্টার", hAddr: "কলেজ রোড, বরগুনা", praise: "ভালো কাজের প্রশংসা", complaint: "খারাপ কাজের অভিযোগ", track: "অভিযোগের/প্রশংসার আপডেট দেখুন", inspection: "পরিদর্শন মন্তব্য বই", oName: "ডাঃ নাজমুস সাকিব", oTitle: "হাসপাতাল মালিক (বিস্তারিত)", mName: "ডাঃ নাজমুস সাকিব", mTitle: "স্বত্বাধিকারী ও চিকিৎসক", mLoc: "দীনু মঞ্জিল, কলেজ রোড, বরগুনা", mMsg: "রোগী সেবায় আমরা সর্বদা প্রতিশ্রুতিবদ্ধ" }
+            en: { hName: "Patient Care Hospital & Diagnostic Centre", hAddr: "College Road, Barguna", praise: "Praise Service", complaint: "Submit Complaint", track: "Track Status", inspection: "Inspection Book", oName: "Dr. Nazmus Sakib", oTitle: "HOSPITAL OWNER", mName: "Dr. Nazmus Sakib", mTitle: "Proprietor & Physician", mLoc: "College Road, Barguna", mMsg: "Committed to excellence" },
+            bn: { hName: "পেশেন্ট কেয়ার হাসপাতাল এন্ড ডায়াগনস্টিক সেন্টার", hAddr: "কলেজ রোড, বরগুনা", praise: "ভালো কাজের প্রশংসা", complaint: "খারাপ কাজের অভিযোগ", track: "আপডেট দেখুন", inspection: "পরিদর্শন মন্তব্য বই", oName: "ডাঃ মো: নাজমুস সাকিব", oTitle: "হাসপাতাল মালিক (বিস্তারিত)", mName: "ডাঃ মো: নাজমুস সাকিব", mTitle: "স্বত্বাধিকারী ও চিকিৎসক", mLoc: "দীনু মঞ্জিল, কলেজ রোড, বরগুনা", mMsg: "রোগী সেবায় আমরা সর্বদা প্রতিশ্রুতিবদ্ধ" }
         };
 
         function changeLanguage() {

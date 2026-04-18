@@ -203,11 +203,6 @@ $inspections_result = mysqli_query($conn, "SELECT * FROM hospital_inspections WH
         }
         .owner-card:hover { transform: translateY(-5px); border-color: var(--primary); }
 
-
-
-
-
-
         /* Modal */
         .modal { display: none; position: fixed; z-index: 9999; left: 0; top: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.7); backdrop-filter: blur(10px); }
         .modal-content { 

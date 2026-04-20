@@ -269,8 +269,8 @@ $inspections_result = mysqli_query($conn, "SELECT * FROM hospital_inspections WH
             </div>
             <div class="modal-body">
                 <div style="text-align:left; background:rgba(0, 168, 181, 0.05); padding:20px; border-radius:20px; font-size:14px;">
-                    <p style="margin-bottom:10px;"><i class="fas fa-hospital" style="color:var(--primary);"></i> <span id="mdl-hosp">পেশেন্ট কেয়ার হাসপাতাল</span></p>
-                    <p style="margin:10px 0;"><i class="fas fa-map-marker-alt" style="color:var(--primary);"></i> <span id="mdl-addr">দীনু মঞ্জিল, কলেজ রোড, বরগুনা</span></p>
+                    <p style="margin-bottom:10px;"><i class="fas fa-hospital" style="color:var(--primary);"></i> <span id="mdl-hosp">পেশেন্ট কেয়ার হাসপাতাল এন্ড ডায়াগনস্টিক সেন্টার</span></p>
+                    <p style="margin:10px 0;"><i class="fas fa-map-marker-alt" style="color:var(--primary);"></i> <span id="mdl-addr"> কলেজ রোড, বরগুনা</span></p>
                     <p><i class="fas fa-phone-alt" style="color:var(--primary);"></i> ০১৯১১১১৪৫৩৪</p>
                 </div>
             </div>
@@ -286,7 +286,7 @@ $inspections_result = mysqli_query($conn, "SELECT * FROM hospital_inspections WH
                 statActive: "একটিভ ফিডব্যাক", statPraise: "প্রশংসা 😊", statComplaint: "অভিযোগ 😟", statVisit: "পরিদর্শন",
                 qrTitle: "Dynamic QR Settings", qrPrint: "অফিসিয়াল পোস্টার প্রিন্ট করুন",
                 secFeedback: "রোগীদের ফিডব্যাক তালিকা", ownerTag: "CHAIRMAN", ownerName: "ডাঃ মো: নাজমুস সাকিব",
-                mdlName: "ডাঃ মো: নাজমুস সাকিব", mdlTitle: "চেয়ারম্যান ও চিকিৎসক", mdlHosp: "পেশেন্ট কেয়ার হাসপাতাল", mdlAddr: "দীনু মঞ্জিল, কলেজ রোড, বরগুনা"
+                mdlName: "ডাঃ মো: নাজমুস সাকিব", mdlTitle: "চেয়ারম্যান", mdlHosp: "পেশেন্ট কেয়ার হাসপাতাল", mdlAddr: "দীনু মঞ্জিল, কলেজ রোড, বরগুনা"
             },
             en: {
                 hTitle: "Patient Care Hospital & Diagnostic Centre", hSub: "Chairman Admin Dashboard",

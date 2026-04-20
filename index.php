@@ -258,7 +258,7 @@
                 <!-- মোবাইল নাম্বার সেকশন -->
                 <div class="detail-row">
                     <i class="fas fa-phone-alt"></i>
-                    <span id="modal-phone"><strong>সরাসরি কথা বলুন:</strong> ০১৯১১১১৪৫৩৪</span>
+                    <span id="modal-phone"><strong>সরাসরি কথা বলুন:</strong>01911114534</span>
                 </div>
                 <div class="detail-row"><i class="fas fa-heart"></i> <span id="modal-msg">রোগী সেবায় আমরা সর্বদা প্রতিশ্রুতিবদ্ধ</span></div>
             </div>

@@ -185,6 +185,8 @@ $archive = mysqli_query($conn, "SELECT * FROM hospital_inspections WHERE is_arch
                 </div>
 
                 <div class="book-inner-header">
+                    <h1>পেশেন্ট কেয়ার হাসপাতাল এন্ড ডায়াগনস্টিক সেন্টার</h1>
+                    <p><i class="fas fa-map-marker-alt"></i> কলেজ রোড, বরগুনা</p>
                     <h1>পরিদর্শন মন্তব্য প্রতিবেদন</h1>
                     <p style="font-size: 12px; color: #777;">অফিসিয়াল ডিজিটাল রেকর্ড</p>
                 </div>

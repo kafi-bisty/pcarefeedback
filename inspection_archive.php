@@ -1,48 +1,44 @@
 <?php
 include 'db.php';
 
-// লগইন ভেরিফিকেশন
+// ১. লগইন ভেরিফিকেশন
 if (!isset($_SESSION['admin_logged_in'])) { 
     header("Location: login.php"); 
     exit(); 
 }
 
-// --- মালিকের জন্য সিকিউরিটি কোড (এটি পরিবর্তন করতে পারেন) ---
-$owner_security_code = "SAKIB@45"; // উদাহরণস্বরূপ কোড:SAKIB@45
+// --- মালিকের জন্য সিকিউরিটি কোড ---
+$owner_security_code = "SAKIB@45";
 
-// ১. সিকিউরিটি কোড সহ চিরতরে ডিলিট করার লজিক
+// ২. সিকিউরিটি কোড সহ চিরতরে ডিলিট করার লজিক
 if (isset($_GET['delete_id']) && isset($_GET['code'])) {
     $delete_id = mysqli_real_escape_string($conn, $_GET['delete_id']);
     $provided_code = $_GET['code'];
 
     if ($provided_code === $owner_security_code) {
-        // প্রথমে স্বাক্ষরের ফাইলের নাম খুঁজে বের করা (সার্ভার থেকে ডিলিট করার জন্য)
         $res = mysqli_query($conn, "SELECT visitor_signature FROM hospital_inspections WHERE id='$delete_id'");
         $row = mysqli_fetch_assoc($res);
         
         if($row && !empty($row['visitor_signature'])) {
             $file_path = "uploads/signatures/" . $row['visitor_signature'];
-            if (file_exists($file_path)) {
-                unlink($file_path); // ফাইল ডিলিট
-            }
+            if (file_exists($file_path)) { unlink($file_path); }
         }
 
-        // ডাটাবেস থেকে ডিলিট করা
         mysqli_query($conn, "DELETE FROM hospital_inspections WHERE id='$delete_id'");
         echo "<script>alert('রেকর্ডটি সফলভাবে ডিলিট করা হয়েছে!'); window.location.href='inspection_archive.php';</script>";
     } else {
-        echo "<script>alert('ভুল সিকিউরিটি কোড! ডিলিট করা সম্ভব হয়নি।'); window.location.href='inspection_archive.php';</script>";
+        echo "<script>alert('ভুল সিকিউরিটি কোড!'); window.location.href='inspection_archive.php';</script>";
     }
 }
 
-// ২. পুনরায় ড্যাশবোর্ডে পাঠানোর লজিক
+// ৩. পুনরায় ড্যাশবোর্ডে পাঠানোর লজিক (Restore)
 if (isset($_GET['restore_id'])) {
     $restore_id = mysqli_real_escape_string($conn, $_GET['restore_id']);
     mysqli_query($conn, "UPDATE hospital_inspections SET is_archived=0 WHERE id='$restore_id'");
     echo "<script>alert('রেকর্ডটি পুনরায় একটিভ তালিকায় পাঠানো হয়েছে।'); window.location.href='inspection_archive.php';</script>";
 }
 
-// আর্কাইভ থেকে ডাটা নিয়ে আসা
+// ৪. আর্কাইভ থেকে ডাটা নিয়ে আসা
 $archive = mysqli_query($conn, "SELECT * FROM hospital_inspections WHERE is_archived=1 ORDER BY id DESC");
 ?>
 
@@ -62,118 +58,196 @@ $archive = mysqli_query($conn, "SELECT * FROM hospital_inspections WHERE is_arch
             --gold: #ED8F03;
             --paper: #fffef0;
             --danger: #e84118;
+            --success: #10b981;
         }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
 
         body { 
             background: linear-gradient(135deg, #2c3e50, #000000); 
             font-family: 'Hind Siliguri', sans-serif; 
-            margin: 0; padding: 20px; color: #333;
+            padding: 20px; color: #333;
+            min-height: 100vh;
         }
         
-        .book-container { max-width: 900px; margin: 0 auto; padding-bottom: 80px; }
+        .book-container { width: 100%; max-width: 900px; margin: 0 auto; padding-bottom: 80px; }
         
+        /* --- Top Header and Nav --- */
+        .page-header {
+            background: linear-gradient(135deg, var(--navy), var(--teal));
+            color: white; padding: 30px 15px; text-align: center;
+            border-radius: 20px 20px 0 0; box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+            border-bottom: 5px solid var(--gold);
+        }
+        .page-header img { width: 70px; height: 70px; background: white; border-radius: 50%; padding: 5px; margin-bottom: 10px; }
+
+        .top-nav { 
+            display: flex; justify-content: space-between; align-items: center; 
+            background: white; padding: 15px; border-radius: 0 0 20px 20px; margin-bottom: 30px;
+        }
+
+        /* --- Register Page Design --- */
         .register-page {
             background: var(--paper);
             padding: 50px 60px;
             margin-bottom: 40px;
-            border-radius: 4px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            border-radius: 8px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.4);
             border: 1px solid #dcdde1;
             position: relative;
             min-height: 900px;
-            animation: fadeIn 0.8s ease-out;
+            animation: slideUp 0.8s ease-out;
         }
 
+        /* Ledger margin line */
         .register-page::before {
             content: ""; position: absolute; left: 50px; top: 0; bottom: 0;
             width: 2px; background: rgba(255, 0, 0, 0.15);
         }
 
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes slideUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
 
-        .book-header { text-align: center; border-bottom: 3px double var(--navy); padding-bottom: 15px; margin-bottom: 40px; }
-        .book-header h1 { margin: 0; font-size: 24px; color: var(--navy); }
+        .book-inner-header { text-align: center; border-bottom: 2px solid var(--navy); padding-bottom: 10px; margin-bottom: 30px; }
+        .book-inner-header h1 { font-size: 22px; color: var(--navy); text-transform: uppercase; }
         
-        .entry-content { font-size: 17px; line-height: 2; }
+        .entry-row { margin-bottom: 15px; font-size: 17px; line-height: 1.6; display: flex; flex-wrap: wrap; }
         .label { font-weight: bold; color: #000; min-width: 140px; display: inline-block; }
 
         .comment-text {
             background: rgba(0, 168, 181, 0.05);
             padding: 20px; border-radius: 10px; border-left: 5px solid var(--teal);
-            font-style: italic; margin: 20px 0; font-size: 18px;
+            font-style: italic; margin: 20px 0; font-size: 18px; line-height: 1.8;
         }
 
-        .sign-area { margin-top: 60px; float: right; width: 320px; text-align: left; padding: 15px; border: 1px solid #eee; border-radius: 10px; background: rgba(255,255,255,0.5); }
-        .signature-img { max-width: 200px; max-height: 80px; display: block; margin-bottom: 5px; }
-        .sign-line { border-top: 2px solid #000; margin-bottom: 8px; }
+        /* Signature area */
+        .sign-area { 
+            margin-top: 50px; float: right; width: 300px; text-align: left; 
+            padding: 15px; border: 1px solid #eee; border-radius: 10px; background: rgba(255,255,255,0.5); 
+        }
+        .signature-img { max-width: 100%; height: 70px; display: block; margin-bottom: 5px; filter: contrast(1.2); }
+        .sign-line { border-top: 2px solid #000; margin-bottom: 8px; width: 100%; }
 
-        .top-nav { display: flex; justify-content: space-between; margin-bottom: 30px; }
-        .btn-action { padding: 10px 18px; border-radius: 10px; text-decoration: none; font-weight: bold; color: white; display: inline-flex; align-items: center; gap: 8px; transition: 0.3s; border: none; cursor: pointer; }
-        
-        .btn-back { background: #353b48; }
-        .btn-restore { background: var(--teal); position: absolute; top: 20px; right: 110px; font-size: 12px; }
-        .btn-delete { background: var(--danger); position: absolute; top: 20px; right: 20px; font-size: 12px; }
-        .btn-print-fixed { position: fixed; bottom: 30px; right: 30px; background: var(--gold); z-index: 1000; }
+        /* Buttons */
+        .btn { padding: 10px 18px; border-radius: 10px; text-decoration: none; font-weight: bold; color: white; display: inline-flex; align-items: center; gap: 8px; transition: 0.3s; border: none; cursor: pointer; }
+        .btn-back { background: var(--navy); }
+        .btn-restore { background: var(--success); font-size: 12px; }
+        .btn-delete { background: var(--danger); font-size: 12px; }
+        .btn-print-fixed { position: fixed; bottom: 30px; right: 30px; background: var(--gold); z-index: 1000; box-shadow: 0 5px 15px rgba(0,0,0,0.3); }
 
+        .action-btns { position: absolute; top: 15px; right: 15px; display: flex; gap: 10px; }
+
+        /* --- Mobile Responsive --- */
+        @media (max-width: 768px) {
+            body { padding: 10px; }
+            .register-page { padding: 30px 15px 30px 45px; min-height: auto; }
+            .register-page::before { left: 35px; }
+            .sign-area { float: none; width: 100%; margin-top: 30px; }
+            .book-inner-header h1 { font-size: 18px; }
+            .action-btns { position: relative; top: 0; right: 0; margin-bottom: 20px; justify-content: flex-end; }
+            .top-nav { flex-direction: column; gap: 10px; }
+        }
+
+        /* --- Print Mode Settings --- */
         @media print {
-            .btn-action, .btn-restore, .btn-delete, .btn-print-fixed { display: none !important; }
-            .register-page { box-shadow: none; border: none; page-break-after: always; min-height: auto; }
+            body { background: white !important; padding: 0; }
+            .btn, .top-nav, .action-btns { display: none !important; }
+            .page-header { background: white !important; color: black !important; border-bottom: 2px solid black; box-shadow: none; border-radius: 0; }
+            .page-header img { border: 1px solid black; }
+            .register-page { box-shadow: none !important; border: 1px solid #eee !important; page-break-after: always; margin: 0; padding: 40px; min-height: 100vh; }
+            .book-container { max-width: 100%; margin: 0; }
+            .register-page::before { background: rgba(255, 0, 0, 0.3); }
         }
     </style>
 </head>
 <body>
 
     <div class="book-container">
-        <div class="top-nav">
-            <a href="view_inspections.php" class="btn-action btn-back"><i class="fas fa-arrow-left"></i> তালিকা ফিরে যান</a>
-            <h2 style="color:white; margin:0;"><i class="fas fa-book"></i> ডিজিটাল পরিদর্শন বই</h2>
-        </div>
+        <!-- Full Page Header for A4 -->
+        <header class="page-header">
+            <img src="images/logo.png" alt="Logo" onerror="this.src='https://cdn-icons-png.flaticon.com/512/3063/3063176.png'">
+            <h1>পেশেন্ট কেয়ার হাসপাতাল এন্ড ডায়াগনস্টিক সেন্টার</h1>
+            <p><i class="fas fa-map-marker-alt"></i> কলেজ রোড, বরগুনা</p>
+        </header>
 
-        <button class="btn-action btn-print-fixed" onclick="window.print()"><i class="fas fa-print"></i> প্রিন্ট করুন</button>
+        <div class="top-nav">
+            <a href="view_inspections.php" class="btn btn-back"><i class="fas fa-arrow-left"></i> তালিকায় ফিরুন</a>
+            <h2 style="font-size: 1.1rem; color: var(--navy);"><i class="fas fa-book"></i> ডিজিটাল পরিদর্শন বই আরকাইভ</h2>
+        </div>
 
         <?php if(mysqli_num_rows($archive) > 0): ?>
             <?php while($row = mysqli_fetch_assoc($archive)): ?>
             <div class="register-page">
-                <!-- Restore and Delete Buttons with Security -->
-                <a href="inspection_archive.php?restore_id=<?php echo $row['id']; ?>" class="btn-action btn-restore"><i class="fas fa-undo"></i> Restore</a>
-                <button onclick="secureDelete(<?php echo $row['id']; ?>)" class="btn-action btn-delete"><i class="fas fa-trash"></i> Delete</button>
-
-                <div class="book-header">
-                    <h1>পেশেন্ট কেয়ার হাসপাতাল এন্ড ডায়াগনস্টিক সেন্টার</h1>
-                    <p>কলেজ রোড,বরগুনা</p>
-                    <div style="margin-top:10px; font-weight:bold; text-decoration: underline;">পরিদর্শন মন্তব্য প্রতিবেদন</div>
+                
+                <!-- Action Buttons Inside Page -->
+                <div class="action-btns">
+                    <a href="inspection_archive.php?restore_id=<?php echo $row['id']; ?>" class="btn btn-restore"><i class="fas fa-undo"></i> Restore</a>
+                    <button onclick="secureDelete(<?php echo $row['id']; ?>)" class="btn btn-delete"><i class="fas fa-trash"></i> Delete</button>
                 </div>
 
-                <div class="entry-content">
-                    <p><span class="label"><i class="fas fa-calendar-alt"></i> তারিখ:</span> <?php echo date('d/m/Y', strtotime($row['submitted_at'])); ?></p>
-                    <p><span class="label"><i class="fas fa-thumbtack"></i> উদ্দেশ্য:</span> <?php echo $row['purpose']; ?></p>
-                    <div class="comment-text">"<?php echo nl2br($row['comments']); ?>"</div>
-                    <?php if(!empty($row['suggestions'])): ?>
-                        <p><strong>পরামর্শ:</strong> <?php echo nl2br($row['suggestions']); ?></p>
-                    <?php endif; ?>
+                <div class="book-inner-header">
+                    <h1>পরিদর্শন মন্তব্য প্রতিবেদন</h1>
+                    <p style="font-size: 12px; color: #777;">অফিসিয়াল ডিজিটাল রেকর্ড</p>
                 </div>
+
+                <div class="entry-row">
+                    <span class="label"><i class="fas fa-calendar-alt"></i> তারিখ:</span>
+                    <span><?php echo date('d F, Y | h:i A', strtotime($row['submitted_at'])); ?></span>
+                </div>
+
+                <div class="entry-row">
+                    <span class="label"><i class="fas fa-thumbtack"></i> উদ্দেশ্য:</span>
+                    <span><?php echo htmlspecialchars($row['purpose']); ?></span>
+                </div>
+
+                <div class="comment-text">
+                    "<?php echo nl2br(htmlspecialchars($row['comments'])); ?>"
+                </div>
+
+                <?php if(!empty($row['suggestions'])): ?>
+                    <div style="margin-top: 20px;">
+                        <p><strong><i class="fas fa-lightbulb" style="color: var(--gold);"></i> বিশেষ পরামর্শ ও দিকনির্দেশনা:</strong></p>
+                        <p style="margin-top: 5px; color: #555; padding-left: 10px;"><?php echo nl2br(htmlspecialchars($row['suggestions'])); ?></p>
+                    </div>
+                <?php endif; ?>
 
                 <div class="sign-area">
-                    <?php if(!empty($row['visitor_signature'])): ?>
-                        <img src="uploads/signatures/<?php echo $row['visitor_signature']; ?>" class="signature-img">
-                    <?php endif; ?>
+                    <div style="height: 80px; display: flex; align-items: center; justify-content: center;">
+                        <?php if(!empty($row['visitor_signature'])): ?>
+                            <img src="uploads/signatures/<?php echo $row['visitor_signature']; ?>" class="signature-img" alt="Signature">
+                        <?php else: ?>
+                            <span style="color:#ccc; font-size:11px;">(স্বাক্ষর নেই)</span>
+                        <?php endif; ?>
+                    </div>
                     <div class="sign-line"></div>
-                    <p><strong>স্বাক্ষরকারী:</strong> <?php echo $row['visitor_name']; ?></p>
-                    <p style="font-size:12px;">পদবী: <?php echo $row['designation']; ?><br>ঠিকানা: <?php echo $row['visitor_address']; ?></p>
+                    <p><strong>স্বাক্ষরকারী:</strong> <?php echo htmlspecialchars($row['visitor_name']); ?></p>
+                    <p style="font-size:12px; color:#666;">পদবী: <?php echo htmlspecialchars($row['designation']); ?></p>
+                    <p style="font-size:11px; color:#888;">ঠিকানা: <?php echo htmlspecialchars($row['visitor_address']); ?></p>
                 </div>
+                
                 <div style="clear:both;"></div>
+                
+                <!-- Page Footer Info -->
+                <div style="position:absolute; bottom:30px; left:60px; color:#aaa; font-size:11px;">
+                    রেকর্ড আইডি: #PC-<?php echo $row['id']; ?> | পেশেন্ট কেয়ার হাসপাতাল
+                </div>
             </div>
             <?php endwhile; ?>
         <?php else: ?>
-            <p style="color:white; text-align:center;">আর্কাইভ বুক খালি!</p>
+            <div style="text-align:center; padding: 100px; background: white; border-radius: 20px;">
+                <i class="fas fa-folder-open" style="font-size: 50px; color: #eee;"></i>
+                <p style="margin-top: 15px; color: #999;">আর্কাইভ বর্তমানে খালি আছে।</p>
+            </div>
         <?php endif; ?>
     </div>
 
+    <!-- Floating Print Button -->
+    <button class="btn btn-print-fixed" onclick="window.print()"><i class="fas fa-print"></i> প্রিন্ট / PDF</button>
+
     <script>
         function secureDelete(id) {
-            let code = prompt("রেকর্ডটি ডিলিট করার জন্য মালিকের সিকিউরিটি কোড দিন:");
+            let code = prompt("রেকর্ডটি চিরতরে ডিলিট করতে সিকিউরিটি কোড দিন:");
             if (code != null && code != "") {
-                window.location.href = "inspection_archive.php?delete_id=" + id + "&code=" + code;
+                window.location.href = "inspection_archive.php?delete_id=" + id + "&code=" + encodeURIComponent(code);
             }
         }
     </script>

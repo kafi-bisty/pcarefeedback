@@ -393,7 +393,7 @@ $inspections_result = mysqli_query($conn, "SELECT * FROM hospital_inspections WH
                 <span class="close-btn" onclick="closeOwnerModal()">&times;</span>
                 <i class="fas fa-user-md" style="font-size: 50px; color:white;"></i>
                 <h2 style="margin:10px 0 0;">ডাঃ নাজমুস সাকিব</h2>
-                <p style="margin:0; opacity:0.8;">স্বত্বাধিকারী ও চিকিৎসক</p>
+                <p style="margin:0; opacity:0.8;">স্বত্বাধিকারী</p>
             </div>
             <div class="modal-body">
                 <p><i class="fas fa-hospital" style="color:var(--primary);"></i> পেশেন্ট কেয়ার হাসপাতাল</p>

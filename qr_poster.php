@@ -1,5 +1,6 @@
 <?php
 include 'db.php';
+// ডাটাবেস থেকে বর্তমান লিঙ্ক নেওয়া
 $qr_fetch = mysqli_query($conn, "SELECT redirect_url FROM qr_settings WHERE id=1");
 $qr_row = mysqli_fetch_assoc($qr_fetch);
 $current_url = ($qr_row) ? $qr_row['redirect_url'] : 'index.php';
@@ -19,57 +20,62 @@ $current_url = ($qr_row) ? $qr_row['redirect_url'] : 'index.php';
         :root {
             --navy: #0D1B3E;
             --teal: #00A8B5;
+            --gold: #ED8F03;
             --white: #ffffff;
-            --light-teal: rgba(0, 168, 181, 0.08);
+            --light-teal: rgba(0, 168, 181, 0.05);
         }
 
-        * { box-sizing: border-box; -webkit-print-color-adjust: exact; }
+        * { box-sizing: border-box; -webkit-print-color-adjust: exact; margin: 0; padding: 0; }
 
         body { 
             background: #f0f0f0; 
             font-family: 'Hind Siliguri', sans-serif; 
-            margin: 0; padding: 0; 
         }
 
+        /* --- A4 Page Setup --- */
         .a4-page {
             width: 210mm;
             height: 297mm;
-            padding: 10mm;
+            padding: 8mm;
             margin: 10px auto;
             background: white;
-            box-shadow: 0 0 30px rgba(0,0,0,0.3);
-            position: relative;
+            box-shadow: 0 0 20px rgba(0,0,0,0.2);
             display: flex;
             flex-direction: column;
+            overflow: hidden;
         }
 
+        /* লোগো কালার ফ্রেম */
         .outer-frame {
             border: 6mm solid var(--navy);
             height: 100%;
             display: flex;
             flex-direction: column;
-            padding: 8mm; /* সামান্য কমানো হয়েছে যাতে ভেতরে জায়গা বাড়ে */
+            padding: 8mm;
             border-image: linear-gradient(to bottom, var(--navy), var(--teal)) 1;
-            justify-content: space-between;
+            justify-content: space-between; /* এটি সব অংশকে সমানভাবে ছড়িয়ে দিবে */
         }
 
+        /* Header */
         .header { text-align: center; border-bottom: 3px solid var(--teal); padding-bottom: 15px; }
-        .logo-box { width: 100px; height: 100px; margin: 0 auto 10px; }
+        .logo-box { width: 90px; height: 90px; margin: 0 auto 10px; }
         .logo-box img { width: 100%; height: auto; }
-        .h-name { font-size: 28pt; color: var(--navy); margin: 0; font-weight: 800; line-height: 1.2; }
-        .h-addr { font-size: 15pt; color: var(--teal); margin: 5px 0; font-weight: 600; }
+        .h-name { font-size: 26pt; color: var(--navy); margin: 0; font-weight: 800; line-height: 1.1; }
+        .h-addr { font-size: 14pt; color: var(--teal); margin: 5px 0; font-weight: 600; }
 
+        /* Instruction Area */
         .instruction {
-            margin-top: 20px;
             font-size: 20pt;
             color: #222;
             font-weight: 800;
             text-align: center;
+            margin-top: 15px;
         }
-        .instruction span { color: var(--teal); text-decoration: underline; }
+        .instruction span { color: var(--teal); border-bottom: 3px solid var(--teal); }
 
+        /* QR Code Container */
         .qr-wrapper {
-            margin: 15px auto;
+            margin: 10px auto;
             padding: 15px;
             background: white;
             border: 3px solid var(--navy);
@@ -77,24 +83,24 @@ $current_url = ($qr_row) ? $qr_row['redirect_url'] : 'index.php';
             display: flex;
             justify-content: center;
             align-items: center;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
         }
 
+        /* ডিজিটাল সেবাসমূহ Section */
         .services-container {
             width: 100%;
             background: var(--light-teal);
-            padding: 20px;
+            padding: 18px;
             border-radius: 20px;
             border: 2px solid var(--teal);
-            margin: 10px 0; /* মার্জিন কমানো হয়েছে */
         }
         .services-container h3 { 
             color: var(--navy); 
             font-size: 18pt; 
-            margin-top: 0; 
+            margin-bottom: 15px; 
             text-align: center;
             border-bottom: 2px solid var(--teal);
-            padding-bottom: 8px;
-            margin-bottom: 15px;
+            padding-bottom: 5px;
         }
         .service-list { 
             display: grid; 
@@ -109,25 +115,44 @@ $current_url = ($qr_row) ? $qr_row['redirect_url'] : 'index.php';
             font-weight: 700; 
             color: #333; 
         }
-        .item i { color: var(--teal); font-size: 18pt; width: 30px; text-align: center; }
+        .item i { color: var(--teal); font-size: 16pt; width: 25px; text-align: center; }
 
+        /* Offline Contact Box */
+        .contact-box {
+            border: 2px dashed var(--navy);
+            padding: 12px;
+            border-radius: 20px;
+            background: #fff;
+            text-align: center;
+        }
+        .contact-box h3 { margin: 0; color: var(--navy); font-size: 16pt; font-weight: 800; }
+        .contact-box .phone-number { 
+            font-size: 26pt; 
+            font-weight: 900; 
+            color: var(--gold); 
+            margin: 5px 0; 
+            display: block;
+        }
+        .contact-box p { margin: 0; font-size: 12pt; color: #555; font-weight: 600; }
+
+        /* Footer */
         .footer {
             background: var(--navy);
             color: white;
             padding: 15px;
             border-radius: 12px;
             text-align: center;
-            margin-top: 5px;
         }
-        .footer h4 { margin: 0; font-size: 17pt; }
-        .footer p { margin: 3px 0 0; font-size: 12pt; opacity: 0.8; }
+        .footer h4 { margin: 0; font-size: 16pt; }
+        .footer p { margin: 2px 0 0; font-size: 11pt; opacity: 0.8; }
 
-        .system-tag { margin-top: 8px; font-size: 8pt; color: #bbb; text-align: center; }
+        .system-tag { margin-top: 5px; font-size: 8pt; color: #999; text-align: center; text-transform: uppercase; }
 
+        /* Print Button - Browser Only */
         .btn-print {
-            position: fixed; top: 30px; right: 30px;
+            position: fixed; top: 20px; right: 20px;
             background: #28a745; color: white; border: none;
-            padding: 15px 30px; border-radius: 50px; font-size: 18px;
+            padding: 12px 24px; border-radius: 50px; font-size: 16px;
             font-weight: bold; cursor: pointer; box-shadow: 0 10px 20px rgba(0,0,0,0.2);
             z-index: 9999;
         }
@@ -142,10 +167,12 @@ $current_url = ($qr_row) ? $qr_row['redirect_url'] : 'index.php';
 </head>
 <body>
 
-    <button class="btn-print" onclick="window.print()"><i class="fas fa-print"></i> প্রিন্ট করুন</button>
+    <button class="btn-print" onclick="window.print()"><i class="fas fa-print"></i> এখনই প্রিন্ট করুন</button>
 
     <div class="a4-page">
         <div class="outer-frame">
+            
+            <!-- Header -->
             <div class="header">
                 <div class="logo-box">
                     <img src="images/logo.png" alt="Logo" onerror="this.src='https://cdn-icons-png.flaticon.com/512/3063/3063176.png'">
@@ -154,14 +181,17 @@ $current_url = ($qr_row) ? $qr_row['redirect_url'] : 'index.php';
                 <p class="h-addr"><i class="fas fa-map-marker-alt"></i> কলেজ রোড, বরগুনা</p>
             </div>
 
+            <!-- Scan Instruction -->
             <div class="instruction">
                 স্মার্টফোনের ক্যামেরা দিয়ে <br><span>কিউআর কোডটি স্ক্যান করুন</span>
             </div>
 
+            <!-- QR Code Area -->
             <div class="qr-wrapper">
                 <div id="qrcode"></div>
             </div>
 
+            <!-- ডিজিটাল সেবাসমূহ Section -->
             <div class="services-container">
                 <h3>ডিজিটাল সেবাসমূহ:</h3>
                 <div class="service-list">
@@ -172,6 +202,14 @@ $current_url = ($qr_row) ? $qr_row['redirect_url'] : 'index.php';
                 </div>
             </div>
 
+            <!-- Offline Support Section -->
+            <div class="contact-box">
+                <h3>স্মার্টফোন নেই? সরাসরি যোগাযোগ করুন:</h3>
+                <div class="phone-number"><i class="fas fa-phone-alt"></i> ০১৯১১১১৪৫৩৪</div>
+                <p>(কল বা এসএমএস-এর মাধ্যমে আপনার মতামত জানান)</p>
+            </div>
+
+            <!-- Footer -->
             <div class="footer">
                 <h4>আপনার সুচিন্তিত মতামত আমাদের পথপ্রদর্শক</h4>
                 <p>কর্তৃপক্ষ - পেশেন্ট কেয়ার হাসপাতাল এন্ড ডায়াগনস্টিক সেন্টার</p>
@@ -180,6 +218,7 @@ $current_url = ($qr_row) ? $qr_row['redirect_url'] : 'index.php';
             <div class="system-tag">
                 Digital Feedback Management System | PC-Hospital
             </div>
+
         </div>
     </div>
 
@@ -187,8 +226,8 @@ $current_url = ($qr_row) ? $qr_row['redirect_url'] : 'index.php';
         var siteUrl = window.location.origin + window.location.pathname.replace('qr_poster.php', 'qr.php'); 
         new QRCode(document.getElementById("qrcode"), {
             text: siteUrl,
-            width: 230, // সাইজ সামান্য কমানো হয়েছে ফিটিং এর জন্য
-            height: 230,
+            width: 200, // সাইজ কমানো হয়েছে যাতে পুরো পেজে ফিট হয়
+            height: 200,
             colorDark : "#0D1B3E",
             colorLight : "#ffffff",
             correctLevel : QRCode.CorrectLevel.H

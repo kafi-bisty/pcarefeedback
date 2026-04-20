@@ -43,21 +43,19 @@
             color: var(--text-main);
         }
 
-        /* --- Top Bar: Responsive Grid --- */
+        /* --- Top Bar --- */
         .top-bar {
             width: 100%;
             max-width: 450px;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 20px;
+            margin-bottom: 15px;
             background: rgba(255, 255, 255, 0.1);
             padding: 12px 15px;
             border-radius: 25px;
             backdrop-filter: blur(10px);
             border: 1px solid rgba(255, 255, 255, 0.2);
-            flex-wrap: wrap;
-            gap: 10px;
         }
 
         #digital-clock {
@@ -76,14 +74,13 @@
 
         .theme-toggle, .lang-container {
             cursor: pointer;
-            font-size: 13px;
-            color: var(--gold);
+            background: rgba(255,255,255,0.1);
+            padding: 5px 12px;
+            border-radius: 15px;
             display: flex;
             align-items: center;
             gap: 5px;
-            background: rgba(255,255,255,0.1);
-            padding: 5px 10px;
-            border-radius: 15px;
+            border: 1px solid rgba(255,255,255,0.2);
         }
 
         .lang-container select {
@@ -93,10 +90,11 @@
             outline: none;
             font-size: 12px;
             font-weight: bold;
+            cursor: pointer;
         }
         .lang-container select option { color: #333; }
 
-        /* --- Main Container: Mobile Responsive --- */
+        /* --- Main Card --- */
         .landing-container {
             background: var(--card-bg);
             padding: 30px 20px;
@@ -111,28 +109,23 @@
 
         @keyframes fadeIn { from { transform: translateY(20px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
 
-       /* লোগো সার্কেল অ্যাডজাস্টমেন্ট */
-.logo-wrapper {
-    width: 140px;             /* আপনার পছন্দমতো সাইজ */
-    height: 140px;
-    margin: 0 auto 20px;
-    background: #fff;         /* লোগোর ভেতরের সাদা রঙের সাথে মিল রাখা হয়েছে */
-    border-radius: 50%;       /* একদম গোল করার জন্য */
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    overflow: hidden;         /* এটি চারকোনা কোণাগুলো কেটে দেবে */
-    border: 5px solid var(--logo-circle-border); /* লোগোর টিল কালার বর্ডার */
-    box-shadow: 0 10px 25px rgba(0,0,0,0.2);
-}
+        .logo-wrapper {
+            width: 130px;
+            height: 130px;
+            margin: 0 auto 20px;
+            background: #fff;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            border: 5px solid var(--logo-circle-border);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+        }
 
-.logo-img {
-    width: 100%;              /* পুরো গোল জায়গাটি দখল করবে */
-    height: 100%;
-    object-fit: cover;        /* লোগোটিকে গোল ফ্রেমের ভেতরে সুন্দরভাবে ফিট করবে */
-    padding: 0;               /* কোনো বাড়তি জায়গা রাখবে না */
-}
-        h1 { font-size: 18px; color: var(--logo-teal); margin-bottom: 5px; font-weight: 800; line-height: 1.3; }
+        .logo-img { width: 100%; height: 100%; object-fit: cover; }
+
+        h1 { font-size: 18px; color: var(--logo-teal); margin-bottom: 5px; font-weight: 800; }
         body.dark-mode h1 { color: var(--neon-blue); }
         .address { font-size: 12px; color: #64748b; margin-bottom: 25px; font-weight: 600; }
 
@@ -143,13 +136,15 @@
             padding: 14px 18px; border-radius: 18px;
             text-decoration: none; font-size: 15px; font-weight: 700; color: white;
             box-shadow: 0 6px 12px rgba(0,0,0,0.1);
+            transition: 0.3s;
         }
-        .btn:active { transform: scale(0.96); }
+        .btn:hover { transform: translateY(-2px); filter: brightness(1.1); }
 
         .btn-praise { background: linear-gradient(135deg, #28a745 0%, #00A8B5 100%); }
         .btn-complaint { background: linear-gradient(135deg, #dc3545 0%, #ff6b6b 100%); }
         .btn-track { background: linear-gradient(135deg, #0D1B3E 0%, #0056b3 100%); }
         .btn-inspection { background: linear-gradient(135deg, #FFB75E 0%, #ED8F03 100%); }
+        .btn-call { background: linear-gradient(135deg, #1e293b 0%, #334155 100%); }
 
         /* Owner Card */
         .owner-trigger {
@@ -167,33 +162,21 @@
         .owner-info-text b { color: var(--text-main); font-size: 14px; display: block; text-align: left; }
         .owner-info-text span { color: var(--logo-teal); font-size: 11px; font-weight: bold; display: block; text-align: left; }
 
-        /* Modal Styles */
+        /* Modal */
         .modal { display: none; position: fixed; z-index: 2000; left: 0; top: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); backdrop-filter: blur(10px); }
         .modal-content {
             background: var(--card-bg); margin: 8vh auto; border-radius: 35px; width: 90%; max-width: 380px;
             overflow: hidden; position: relative; animation: slideIn 0.4s ease-out;
         }
         @keyframes slideIn { from { transform: translateY(50px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
-        
         .modal-close { position: absolute; right: 15px; top: 15px; color: white; font-size: 22px; cursor: pointer; background: rgba(0,0,0,0.3); width: 30px; height: 30px; border-radius: 50%; display: flex; align-items: center; justify-content: center; z-index: 20; }
-        
         .owner-img-container { width: 130px; height: 130px; border-radius: 50%; border: 5px solid var(--card-bg); margin: 0 auto; margin-top: -65px; position: relative; z-index: 10; overflow: hidden; background: #fff; box-shadow: 0 10px 20px rgba(0,0,0,0.2); }
         .owner-img-full { width: 100%; height: 100%; object-fit: cover; object-position: top; }
-
         .modal-body { padding: 15px 20px 25px; text-align: center; color: var(--text-main); }
         .detail-row { display: flex; align-items: center; gap: 10px; background: rgba(148, 163, 184, 0.1); padding: 10px; border-radius: 12px; margin-bottom: 8px; text-align: left; font-size: 13px; font-weight: 600; }
         .detail-row i { color: var(--logo-teal); width: 18px; text-align: center; }
 
-        .footer-text { margin-top: 20px; font-size: 10px; color: #94a3b8; font-weight: bold; }
-
-        /* মোবাইল স্ক্রিনের জন্য বিশেষ টিউনিং */
-        @media (max-width: 380px) {
-            .landing-container { padding: 20px 15px; }
-            h1 { font-size: 16px; }
-            .btn { font-size: 13px; padding: 12px 15px; }
-            .logo-wrapper { width: 110px; height: 110px; }
-            #digital-clock { font-size: 12px; }
-        }
+        @media (max-width: 480px) { h1 { font-size: 16px; } .btn { font-size: 14px; } }
     </style>
 </head>
 <body>
@@ -201,17 +184,12 @@
     <!-- Top Bar -->
     <div class="top-bar">
         <div id="digital-clock">00:00:00 AM</div>
-        
         <div class="top-actions">
-            <!-- ডার্ক মোড বাটন -->
             <div class="theme-toggle" onclick="toggleDarkMode()">
-                <i id="theme-icon" class="fas fa-moon"></i> 
-                <span id="theme-text" style="display: none;">ডার্ক</span>
+                <i id="theme-icon" class="fas fa-moon" style="color: var(--gold);"></i> 
             </div>
-
-            <!-- ল্যাঙ্গুয়েজ সিলেক্টর -->
             <div class="lang-container">
-                <i class="fas fa-globe"></i>
+                <i class="fas fa-globe" style="color: white; font-size: 14px;"></i>
                 <select id="langSelector" onchange="changeLanguage()">
                     <option value="bn">বাংলা</option>
                     <option value="en">EN</option>
@@ -221,7 +199,6 @@
     </div>
 
     <div class="landing-container">
-        <!-- লোগো সার্কেল অ্যাডজাস্ট করা হয়েছে -->
         <div class="logo-wrapper">
             <img src="images/logo.png" alt="Logo" class="logo-img">
         </div>
@@ -246,6 +223,11 @@
                 <span><i class="fas fa-clipboard-check"></i> &nbsp; <span id="txt-inspection">পরিদর্শন মন্তব্য বই</span></span>
                 <i class="fas fa-chevron-right"></i>
             </a>
+            <!-- সরাসরি কল করার বাটন -->
+            <a href="tel:01911114534" class="btn btn-call">
+                <span><i class="fas fa-phone-volume"></i> &nbsp; <span id="txt-call">সরাসরি কল করুন</span></span>
+                <i class="fas fa-chevron-right"></i>
+            </a>
         </div>
 
         <div class="owner-trigger" onclick="toggleModal(true)">
@@ -255,10 +237,6 @@
                 <span id="txt-owner-title">হাসপাতাল মালিক (বিস্তারিত)</span>
             </div>
             <i class="fas fa-info-circle" style="margin-left: auto; color: var(--logo-teal);"></i>
-        </div>
-
-        <div class="footer-text">
-            © ২০২৪ Patient Care Hospital | Barguna
         </div>
     </div>
 
@@ -273,35 +251,37 @@
             </div>
             <div class="modal-body">
                 <h2 id="modal-name">ডাঃ মো: নাজমুস সাকিব</h2>
-                <p style="color: var(--logo-teal); font-weight: bold; margin-bottom: 15px; font-size: 13px;" id="modal-title">স্বত্বাধিকারী ও চিকিৎসক</p>
+                <p style="color: var(--logo-teal); font-weight: bold; margin-bottom: 15px; font-size: 13px;" id="modal-title">স্বত্বাধিকারী</p>
                 <div class="detail-row"><i class="fas fa-hospital"></i> <span id="modal-hosp" style="font-size: 11px;">পেশেন্ট কেয়ার হাসপাতাল এন্ড ডায়াগনস্টিক সেন্টার</span></div>
                 <div class="detail-row"><i class="fas fa-map-marker-alt"></i> <span id="modal-loc"> কলেজ রোড, বরগুনা</span></div>
+                <!-- মোবাইল নাম্বার সেকশন -->
+                <div class="detail-row">
+                    <i class="fas fa-phone-alt"></i>
+                    <span id="modal-phone"><strong>সরাসরি কথা বলুন:</strong> ০১৯১১১১৪৫৩৪</span>
+                </div>
                 <div class="detail-row"><i class="fas fa-heart"></i> <span id="modal-msg">রোগী সেবায় আমরা সর্বদা প্রতিশ্রুতিবদ্ধ</span></div>
             </div>
         </div>
     </div>
 
     <script>
-        // Digital Clock
         function updateClock() {
             const now = new Date();
             let hours = now.getHours();
             let minutes = now.getMinutes();
-            let seconds = now.getSeconds();
             let ampm = hours >= 12 ? 'PM' : 'AM';
             hours = hours % 12 || 12;
             const lang = document.getElementById('langSelector').value;
             if(lang === 'bn') {
                 const bnDigits = ['০','১','২','৩','৪','৫','৬','৭','৮','৯'];
                 const toBn = (n) => n.toString().padStart(2, '0').split('').map(d => isNaN(d) ? d : bnDigits[d]).join('');
-                document.getElementById('digital-clock').innerText = `${toBn(hours)}:${toBn(minutes)}:${toBn(seconds)} ${ampm === 'AM' ? 'পূর্বাহ্ণ' : 'অপরাহ্ণ'}`;
+                document.getElementById('digital-clock').innerText = `${toBn(hours)}:${toBn(minutes)} ${ampm === 'AM' ? 'পূর্বাহ্ণ' : 'অপরাহ্ণ'}`;
             } else {
-                document.getElementById('digital-clock').innerText = `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')} ${ampm}`;
+                document.getElementById('digital-clock').innerText = `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')} ${ampm}`;
             }
         }
         setInterval(updateClock, 1000); updateClock();
 
-        // Dark Mode Logic
         document.addEventListener('DOMContentLoaded', function() {
             if (localStorage.getItem('theme') === 'dark') {
                 document.body.classList.add('dark-mode');
@@ -317,20 +297,15 @@
 
         function updateThemeUI(isDark) {
             const icon = document.getElementById('theme-icon');
-            if (isDark) {
-                icon.classList.replace('fa-moon', 'fa-sun');
-                icon.style.color = "#FFB75E";
-            } else {
-                icon.classList.replace('fa-sun', 'fa-moon');
-                icon.style.color = "#ED8F03";
-            }
+            if (isDark) { icon.classList.replace('fa-moon', 'fa-sun'); icon.style.color = "#FFB75E"; }
+            else { icon.classList.replace('fa-sun', 'fa-moon'); icon.style.color = "#ED8F03"; }
         }
 
         function toggleModal(show) { document.getElementById("ownerModal").style.display = show ? "block" : "none"; }
 
         const translations = {
-            en: { hName: "Patient Care Hospital & Diagnostic Centre", hAddr: "College Road, Barguna", praise: "Praise Service", complaint: "Submit Complaint", track: "Track Status", inspection: "Inspection Book", oName: "Dr. Nazmus Sakib", oTitle: "HOSPITAL OWNER", mName: "Dr. Nazmus Sakib", mTitle: "Proprietor & Physician", mLoc: "College Road, Barguna", mMsg: "Committed to excellence" },
-            bn: { hName: "পেশেন্ট কেয়ার হাসপাতাল এন্ড ডায়াগনস্টিক সেন্টার", hAddr: "কলেজ রোড, বরগুনা", praise: "ভালো কাজের প্রশংসা", complaint: "খারাপ কাজের অভিযোগ", track: "আপডেট দেখুন", inspection: "পরিদর্শন মন্তব্য বই", oName: "ডাঃ মো: নাজমুস সাকিব", oTitle: "হাসপাতাল মালিক (বিস্তারিত)", mName: "ডাঃ মো: নাজমুস সাকিব", mTitle: "স্বত্বাধিকারী ও চিকিৎসক", mLoc: "দীনু মঞ্জিল, কলেজ রোড, বরগুনা", mMsg: "রোগী সেবায় আমরা সর্বদা প্রতিশ্রুতিবদ্ধ" }
+            en: { hName: "Patient Care Hospital & Diagnostic Centre", hAddr: "College Road, Barguna", praise: "Praise Service", complaint: "Complaint", track: "Track Status", inspection: "Inspection Book", call: "Call Directly", oName: "Dr. Nazmus Sakib", oTitle: "Proprietor", modalPhone: "Direct Call: 01911114534", mLoc: "College Road, Barguna", mMsg: "Committed to excellence" },
+            bn: { hName: "পেশেন্ট কেয়ার হাসপাতাল এন্ড ডায়াগনস্টিক সেন্টার", hAddr: "কলেজ রোড, বরগুনা", praise: "ভালো কাজের প্রশংসা", complaint: "খারাপ কাজের অভিযোগ", track: "আপডেট দেখুন", inspection: "পরিদর্শন মন্তব্য বই", call: "সরাসরি কল করুন", oName: "ডাঃ মো: নাজমুস সাকিব", oTitle: "স্বত্বাধিকারী", modalPhone: "সরাসরি কথা বলুন: ০১৯১১১১৪৫৩৪", mLoc: " কলেজ রোড, বরগুনা", mMsg: "রোগী সেবায় আমরা সর্বদা প্রতিশ্রুতিবদ্ধ" }
         };
 
         function changeLanguage() {
@@ -342,10 +317,11 @@
             document.getElementById('txt-complaint').innerText = t.complaint;
             document.getElementById('txt-track').innerText = t.track;
             document.getElementById('txt-inspection').innerText = t.inspection;
+            document.getElementById('txt-call').innerText = t.call;
             document.getElementById('txt-owner-name').innerText = t.oName;
-            document.getElementById('txt-owner-title').innerText = t.oTitle;
-            document.getElementById('modal-name').innerText = t.mName;
-            document.getElementById('modal-title').innerText = t.mTitle;
+            document.getElementById('modal-name').innerText = t.oName;
+            document.getElementById('modal-title').innerText = t.oTitle;
+            document.getElementById('modal-phone').innerHTML = `<strong>${t.modalPhone}</strong>`;
             document.getElementById('modal-loc').innerText = t.mLoc;
             document.getElementById('modal-msg').innerText = t.mMsg;
             updateClock();

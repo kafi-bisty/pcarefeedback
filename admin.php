@@ -252,7 +252,7 @@ $inspections_result = mysqli_query($conn, "SELECT * FROM hospital_inspections WH
             <div class="chairman-card" onclick="openOwnerModal()">
                 <img src="images/owner.jpg" alt="Chairman" class="chairman-img" onerror="this.src='https://cdn-icons-png.flaticon.com/512/387/387561.png'">
                 <span id="txt-owner-tag" style="display:block; color:var(--primary); font-weight:bold; font-size:12px; text-transform:uppercase;">Chairman</span>
-                <h4 id="txt-owner-name">ডাঃ মো: নাজমুস সাকিব</h4>
+                <h4 id="txt-owner-name"> মো: নাজমুস সাকিব</h4>
                 <p id="txt-owner-hosp" style="font-size: 11px; color: #94a3b8;">পেশেন্ট কেয়ার হাসপাতাল এন্ড ডায়াগনস্টিক সেন্টার</p>
             </div>
         </div>
@@ -264,8 +264,8 @@ $inspections_result = mysqli_query($conn, "SELECT * FROM hospital_inspections WH
             <div class="modal-header">
                 <span class="close-btn" onclick="closeOwnerModal()" style="position:absolute; right:20px; top:15px; cursor:pointer; font-size:24px; color:white;">&times;</span>
                 <img src="images/owner.jpg" alt="Chairman" style="width:100px; height:100px; border-radius:50%; border:3px solid white; object-fit:cover; margin-bottom:10px;" onerror="this.src='https://cdn-icons-png.flaticon.com/512/387/387561.png'">
-                <h2 id="mdl-name">ডাঃ মো: নাজমুস সাকিব</h2>
-                <p id="mdl-title" style="opacity:0.9; font-weight:bold;">চেয়ারম্যান ও চিকিৎসক</p>
+                <h2 id="mdl-name"> মো: নাজমুস সাকিব</h2>
+                <p id="mdl-title" style="opacity:0.9; font-weight:bold;">চেয়ারম্যান </p>
             </div>
             <div class="modal-body">
                 <div style="text-align:left; background:rgba(0, 168, 181, 0.05); padding:20px; border-radius:20px; font-size:14px;">

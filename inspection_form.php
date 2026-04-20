@@ -116,6 +116,7 @@
         <div class="input-group">
             <select id="gate-role" required>
                 <option value="">আপনার পরিচয় নির্বাচন করুন</option>
+                <option value="প্রশাসনিক">প্রশাসনিক/সরকারি কর্মকর্তা</option>
                 <option value="সিভিল সার্জন">সিভিল সার্জন / সরকারি কর্মকর্তা</option>
                 <option value="বিশিষ্ট ব্যক্তি">বিশিষ্ট ব্যক্তি / সমাজসেবক</option>
                 <option value="অভিভাবক">রোগীর অভিভাবক / আত্মীয়</option>

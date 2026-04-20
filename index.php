@@ -233,8 +233,8 @@
         <div class="owner-trigger" onclick="toggleModal(true)">
             <img src="images/owner.jpg" alt="Dr. Nazmus Sakib" class="owner-thumb" onerror="this.src='https://cdn-icons-png.flaticon.com/512/387/387561.png'">
             <div class="owner-info-text">
-                <b id="txt-owner-name">ডাঃ মো: নাজমুস সাকিব</b>
-                <span id="txt-owner-title">হাসপাতাল মালিক (বিস্তারিত)</span>
+                <b id="txt-owner-name"> মো: নাজমুস সাকিব</b>
+                <span id="txt-owner-title">চেয়ারম্যান (বিস্তারিত)</span>
             </div>
             <i class="fas fa-info-circle" style="margin-left: auto; color: var(--logo-teal);"></i>
         </div>
@@ -250,8 +250,9 @@
                 <img src="images/owner.jpg" alt="Dr. Nazmus Sakib" class="owner-img-full" onerror="this.src='https://cdn-icons-png.flaticon.com/512/387/387561.png'">
             </div>
             <div class="modal-body">
-                <h2 id="modal-name">ডাঃ মো: নাজমুস সাকিব</h2>
-                <p style="color: var(--logo-teal); font-weight: bold; margin-bottom: 15px; font-size: 13px;" id="modal-title">স্বত্বাধিকারী</p>
+                <h2 id="modal-name"> মো:নাজমুস সাকিব</h2>
+                <h3 style="color: var(--logo-teal); margin-bottom: 20px;" id="modal-title">চেয়ারম্যান</h3>
+                <p style="color: var(--logo-teal); font-weight: bold; margin-bottom: 15px; font-size: 13px;" id="modal-title"></p>
                 <div class="detail-row"><i class="fas fa-hospital"></i> <span id="modal-hosp" style="font-size: 11px;">পেশেন্ট কেয়ার হাসপাতাল এন্ড ডায়াগনস্টিক সেন্টার</span></div>
                 <div class="detail-row"><i class="fas fa-map-marker-alt"></i> <span id="modal-loc"> কলেজ রোড, বরগুনা</span></div>
                 <!-- মোবাইল নাম্বার সেকশন -->
@@ -305,7 +306,7 @@
 
         const translations = {
             en: { hName: "Patient Care Hospital & Diagnostic Centre", hAddr: "College Road, Barguna", praise: "Praise Service", complaint: "Complaint", track: "Track Status", inspection: "Inspection Book", call: "Call Directly", oName: "Dr. Nazmus Sakib", oTitle: "Proprietor", modalPhone: "Direct Call: 01911114534", mLoc: "College Road, Barguna", mMsg: "Committed to excellence" },
-            bn: { hName: "পেশেন্ট কেয়ার হাসপাতাল এন্ড ডায়াগনস্টিক সেন্টার", hAddr: "কলেজ রোড, বরগুনা", praise: "ভালো কাজের প্রশংসা", complaint: "খারাপ কাজের অভিযোগ", track: "আপডেট দেখুন", inspection: "পরিদর্শন মন্তব্য বই", call: "সরাসরি কল করুন", oName: "ডাঃ মো: নাজমুস সাকিব", oTitle: "স্বত্বাধিকারী", modalPhone: "সরাসরি কথা বলুন: ০১৯১১১১৪৫৩৪", mLoc: " কলেজ রোড, বরগুনা", mMsg: "রোগী সেবায় আমরা সর্বদা প্রতিশ্রুতিবদ্ধ" }
+            bn: { hName: "পেশেন্ট কেয়ার হাসপাতাল এন্ড ডায়াগনস্টিক সেন্টার", hAddr: "কলেজ রোড, বরগুনা", praise: "ভালো কাজের প্রশংসা", complaint: "খারাপ কাজের অভিযোগ", track: "আপডেট দেখুন", inspection: "পরিদর্শন মন্তব্য বই", call: "সরাসরি কল করুন", oName: "ডাঃ মো: নাজমুস সাকিব", oTitle: "চেয়ারম্যান", modalPhone: "সরাসরি কথা বলুন: ০১৯১১১১৪৫৩৪", mLoc: " কলেজ রোড, বরগুনা", mMsg: "রোগী সেবায় আমরা সর্বদা প্রতিশ্রুতিবদ্ধ" }
         };
 
         function changeLanguage() {

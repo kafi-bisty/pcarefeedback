@@ -15,7 +15,7 @@ if ($qr_fetch && mysqli_num_rows($qr_fetch) > 0) {
     $current_url = $qr_row['redirect_url'];
 }
 
-// ৩. আপডেট লজিক
+// ৩. আপডেট লজিক (QR & Status)
 if (isset($_POST['update_qr'])) {
     $new_url = mysqli_real_escape_string($conn, $_POST['new_url']);
     mysqli_query($conn, "UPDATE qr_settings SET redirect_url='$new_url' WHERE id=1");
@@ -32,11 +32,11 @@ if (isset($_POST['update_action'])) {
     exit();
 }
 
-// ৪. আর্কাইভ লজিক
+// ৪. আর্কাইভ লজিক (রোগীর ফিডব্যাক আর্কাইভ করা)
 if (isset($_GET['archive_id'])) {
     $archive_id = mysqli_real_escape_string($conn, $_GET['archive_id']);
     mysqli_query($conn, "UPDATE hospital_feedback SET is_archived=1 WHERE id='$archive_id'");
-    header("Location: admin.php");
+    echo "<script>alert('আর্কাইভে পাঠানো হয়েছে!'); window.location.href='admin.php';</script>";
     exit();
 }
 
@@ -60,7 +60,7 @@ $inspections_result = mysqli_query($conn, "SELECT * FROM hospital_inspections WH
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Chairman Dashboard - Patient Care Hospital</title>
     <!-- Google Fonts & Font Awesome -->
-    <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;600;700&family=Orbitron:wght@500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;600;700&family=Poppins:wght@300;500;700&family=Orbitron:wght@500;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
     <style>
@@ -106,8 +106,8 @@ $inspections_result = mysqli_query($conn, "SELECT * FROM hospital_inspections WH
         .stat-card p { font-size: 30px; font-weight: bold; margin: 10px 0 0; }
 
         .qr-card { background: var(--card-bg); padding: 30px; border-radius: 25px; display: flex; flex-wrap: wrap; gap: 30px; align-items: center; justify-content: space-around; margin-bottom: 40px; box-shadow: 0 10px 30px rgba(0,0,0,0.05); }
-        .qr-info { flex: 1; min-width: 300px; }
-        .qr-info input { width: 100%; padding: 12px; border-radius: 12px; border: 1px solid rgba(0,0,0,0.1); background: var(--light-bg); color: var(--text-color); margin-bottom: 10px; outline: none; }
+        .qr-info { flex: 1; min-width: 300px; text-align: left; }
+        .qr-info input { width: 100%; padding: 12px; border-radius: 12px; border: 1px solid #ddd; background: var(--light-bg); color: var(--text-color); margin-bottom: 10px; }
 
         .table-wrapper { background: var(--card-bg); border-radius: 20px; overflow-x: auto; box-shadow: 0 10px 30px rgba(0,0,0,0.05); margin-bottom: 40px; }
         table { width: 100%; border-collapse: collapse; min-width: 1000px; }
@@ -119,12 +119,13 @@ $inspections_result = mysqli_query($conn, "SELECT * FROM hospital_inspections WH
         .investigation { background: #d1ecf1; color: #0c5460; }
         .Resolved { background: #d4edda; color: #155724; }
 
-        .q-btn { font-size: 10px; padding: 5px 8px; cursor: pointer; border-radius: 5px; border: 1px solid #ddd; background: var(--card-bg); margin: 2px; display: inline-block; color: inherit; }
+        .q-btn { font-size: 10px; padding: 5px 8px; cursor: pointer; border-radius: 5px; border: 1px solid #ddd; background: var(--card-bg); color: inherit; margin: 2px; display: inline-block; }
         textarea { width: 100%; border-radius: 10px; padding: 8px; background: var(--light-bg); color: var(--text-color); border: 1px solid #ddd; margin-top: 5px; }
 
-        .chairman-section { margin-top: 50px; display: flex; justify-content: center; padding: 30px 0; border-top: 2px solid #e0e0e0; }
-        .chairman-card { background: var(--card-bg); padding: 25px 40px; border-radius: 30px; text-align: center; box-shadow: 0 15px 35px rgba(0,0,0,0.1); cursor: pointer; transition: 0.3s; border: 1px solid #eee; width: 100%; max-width: 400px; }
-        .chairman-card:hover { transform: translateY(-10px); border-color: var(--primary); }
+        .archive-btn { background: #f1f2f6; color: #636e72; padding: 8px 12px; border-radius: 8px; text-decoration: none; font-size: 12px; font-weight: bold; display: flex; align-items: center; justify-content: center; gap: 5px; margin-top: 10px; transition: 0.3s; border: 1px solid #ddd; }
+        .archive-btn:hover { background: var(--navy); color: white; }
+
+        .chairman-card { background: var(--card-bg); padding: 25px 40px; border-radius: 30px; text-align: center; box-shadow: 0 15px 35px rgba(0,0,0,0.1); cursor: pointer; transition: 0.3s; border: 1px solid #eee; width: 100%; max-width: 400px; margin: 50px auto; }
         .chairman-img { width: 100px; height: 100px; border-radius: 50%; object-fit: cover; border: 3px solid var(--primary); margin-bottom: 15px; }
 
         .modal { display: none; position: fixed; z-index: 10000; left: 0; top: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.7); backdrop-filter: blur(8px); }
@@ -145,9 +146,9 @@ $inspections_result = mysqli_query($conn, "SELECT * FROM hospital_inspections WH
 
     <div class="admin-container">
         
+        <!-- Top Nav Bar -->
         <div class="nav-bar">
             <div id="digital-clock">00:00:00 AM</div>
-
             <div class="nav-right">
                 <div class="lang-box">
                     <i class="fas fa-globe"></i>
@@ -161,6 +162,8 @@ $inspections_result = mysqli_query($conn, "SELECT * FROM hospital_inspections WH
                 </div>
                 <a href="history.php" class="btn-link btn-history"><i class="fas fa-history"></i> <span id="txt-nav-history">ইতিহাস</span></a>
                 <a href="view_inspections.php" class="btn-link btn-inspection"><i class="fas fa-book"></i> <span id="txt-nav-inspect">পরিদর্শন</span></a>
+                <!-- New Inspection Archive Link -->
+                <a href="inspection_archive.php" class="btn-link btn-inspection" style="background:#8e44ad;"><i class="fas fa-archive"></i> পরিদর্শন আর্কাইভ</a>
                 <a href="logout.php" class="btn-link btn-logout"><i class="fas fa-power-off"></i></a>
             </div>
         </div>
@@ -173,20 +176,18 @@ $inspections_result = mysqli_query($conn, "SELECT * FROM hospital_inspections WH
             <div class="stat-card" style="border-bottom-color: var(--gold);"><h3 id="txt-stat-visit">পরিদর্শন</h3><p><?php echo $total_inspections; ?></p></div>
         </div>
 
-        <!-- QR Section with Poster Button -->
+        <!-- QR Settings & Print -->
         <div class="qr-card">
             <div class="qr-info">
                 <h3 style="margin-bottom: 15px; color: var(--navy); display: flex; align-items: center; gap: 10px;">
                     <i class="fas fa-qrcode"></i> <span id="txt-qr-title">Dynamic QR Settings</span>
                 </h3>
-                <form method="POST" action="admin.php">
+                <form method="POST">
                     <input type="text" name="new_url" value="<?php echo htmlspecialchars($current_url); ?>" required>
                     <button type="submit" name="update_qr" class="btn-link btn-history" style="border:none; cursor:pointer; width: 100%; justify-content: center;">Update Link</button>
                 </form>
-                
-                <!-- অফিসিয়াল পোস্টার প্রিন্ট বাটন -->
                 <a href="qr_poster.php" target="_blank" style="display:flex; align-items:center; justify-content:center; gap:10px; margin-top:15px; padding:15px; background:linear-gradient(45deg, var(--gold), #ff9f43); color:white; text-decoration:none; border-radius:15px; font-weight:800; box-shadow: 0 5px 15px rgba(237, 143, 3, 0.3); transition: 0.3s;">
-                    <i class="fas fa-print" style="font-size: 18px;"></i> <span id="txt-qr-print">অফিসিয়াল পোস্টার প্রিন্ট করুন</span>
+                    <i class="fas fa-print" style="font-size: 18px;"></i> <span>অফিসিয়াল পোস্টার প্রিন্ট করুন</span>
                 </a>
             </div>
             <div style="text-align: center; background: rgba(0,0,0,0.02); padding: 20px; border-radius: 20px;">
@@ -195,17 +196,17 @@ $inspections_result = mysqli_query($conn, "SELECT * FROM hospital_inspections WH
             </div>
         </div>
 
-        <!-- Table -->
-        <h2 id="txt-sec-feedback" style="border-left:6px solid var(--primary); padding-left:15px; margin-bottom:15px;">রোগীদের ফিডব্যাক তালিকা</h2>
+        <!-- Feedback Table -->
+        <h2 id="txt-sec-feedback" style="border-left:5px solid var(--primary); padding-left:15px; margin-bottom:15px;">রোগীদের ফিডব্যাক তালিকা</h2>
         <div class="table-wrapper">
             <table>
                 <thead>
                     <tr>
-                        <th>ID & ধরন</th>
-                        <th>বিভাগ ও কর্মচারী</th>
-                        <th>বার্তা & প্রমাণ</th>
-                        <th>রোগী</th>
-                        <th width="300">ব্যবস্থা নিন</th>
+                        <th id="txt-th-id">ID & ধরন</th>
+                        <th id="txt-th-dept">বিভাগ ও কর্মচারী</th>
+                        <th id="txt-th-msg">বার্তা & প্রমাণ</th>
+                        <th id="txt-th-patient">রোগী</th>
+                        <th id="txt-th-action" width="300">ব্যবস্থা নিন</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -237,9 +238,11 @@ $inspections_result = mysqli_query($conn, "SELECT * FROM hospital_inspections WH
                                         <span class="q-btn" onclick="setReply(<?php echo $row['id']; ?>, 'Resolved', 'আপনার অভিযোগের সত্যতা পাওয়া গিয়েছে এবং অভিযুক্তের বিরুদ্ধে যথাযথ ব্যবস্থা নেওয়া হয়েছে। ধন্যবাদ।')">সমাধান</span>
                                     <?php endif; ?>
                                 </div>
-                                <textarea name="owner_reply" id="reply_<?php echo $row['id']; ?>" rows="2"><?php echo $row['owner_reply']; ?></textarea>
-                                <button type="submit" name="update_action" style="width:100%; padding:10px; background:#2ecc71; color:white; border:none; border-radius:10px; font-weight:bold; cursor:pointer; margin-top:5px;">Update</button>
+                                <textarea name="owner_reply" id="reply_<?php echo $row['id']; ?>" rows="2" placeholder="জবাব লিখুন..."><?php echo $row['owner_reply']; ?></textarea>
+                                <button type="submit" name="update_action" style="width:100%; padding:8px; background:#2ecc71; color:white; border:none; border-radius:10px; font-weight:bold; cursor:pointer; margin-top:5px;">Update Status</button>
                             </form>
+                            <!-- Patient Feedback Archive Button -->
+                            <a href="admin.php?archive_id=<?php echo $row['id']; ?>" class="archive-btn" onclick="return confirm('এটি কি আর্কাইভে পাঠাতে চান?')"><i class="fas fa-folder-minus"></i> ড্যাশবোর্ড থেকে সরান (Archive)</a>
                         </td>
                     </tr>
                     <?php endwhile; ?>
@@ -247,62 +250,77 @@ $inspections_result = mysqli_query($conn, "SELECT * FROM hospital_inspections WH
             </table>
         </div>
 
+        <!-- Recent Inspections (Short View) -->
+        <div class="section-title" style="display:flex; justify-content:space-between; align-items:center;">
+            <h2>সাম্প্রতিক পরিদর্শন (Inspection)</h2>
+            <a href="view_inspections.php" class="q-btn">সবগুলো দেখুন <i class="fas fa-arrow-right"></i></a>
+        </div>
+        <div class="table-wrapper">
+            <table>
+                <thead>
+                    <tr><th>তারিখ</th><th>পরিদর্শনকারী</th><th>মন্তব্য</th><th>স্বাক্ষর</th></tr>
+                </thead>
+                <tbody>
+                    <?php if(mysqli_num_rows($inspections_result) > 0): ?>
+                        <?php while($ins = mysqli_fetch_assoc($inspections_result)): ?>
+                        <tr>
+                            <td><small><?php echo date('d M, Y', strtotime($ins['submitted_at'])); ?></small></td>
+                            <td><strong><?php echo $ins['visitor_name']; ?></strong><br><small><?php echo $ins['designation']; ?></small></td>
+                            <td><i style="font-size:12px;">"<?php echo mb_strimwidth($ins['comments'], 0, 80, "..."); ?>"</i></td>
+                            <td align="center">
+                                <?php if(!empty($ins['visitor_signature'])): ?>
+                                    <img src="uploads/signatures/<?php echo $ins['visitor_signature']; ?>" style="height:35px; background:white; padding:2px; border:1px solid #eee; border-radius:5px;">
+                                <?php else: ?>
+                                    <small style="color:#ccc;">সই নেই</small>
+                                <?php endif; ?>
+                            </td>
+                        </tr>
+                        <?php endwhile; ?>
+                    <?php else: ?>
+                        <tr><td colspan="4" align="center">কোনো ডাটা নেই।</td></tr>
+                    <?php endif; ?>
+                </tbody>
+            </table>
+        </div>
+
         <!-- Chairman Card -->
-        <div class="chairman-section">
-            <div class="chairman-card" onclick="openOwnerModal()">
-                <img src="images/owner.jpg" alt="Chairman" class="chairman-img" onerror="this.src='https://cdn-icons-png.flaticon.com/512/387/387561.png'">
-                <span id="txt-owner-tag" style="display:block; color:var(--primary); font-weight:bold; font-size:12px; text-transform:uppercase;">Chairman</span>
-                <h4 id="txt-owner-name"> মো: নাজমুস সাকিব</h4>
-                <p id="txt-owner-hosp" style="font-size: 11px; color: #94a3b8;">পেশেন্ট কেয়ার হাসপাতাল এন্ড ডায়াগনস্টিক সেন্টার</p>
-            </div>
+        <div class="chairman-card" onclick="openOwnerModal()">
+            <img src="images/owner.jpg" alt="Chairman" class="chairman-img" onerror="this.src='https://cdn-icons-png.flaticon.com/512/387/387561.png'">
+            <span id="txt-owner-tag" style="display:block; color:var(--primary); font-weight:bold; font-size:12px; text-transform:uppercase;">Chairman</span>
+            <h4 id="txt-owner-name"> মো: নাজমুস সাকিব</h4>
+            <p style="font-size: 11px; color: #94a3b8;">পেশেন্ট কেয়ার হাসপাতাল এন্ড ডায়াগনস্টিক সেন্টার</p>
         </div>
     </div>
 
-    <!-- Modal Owner -->
+    <!-- Modal Popup -->
     <div id="ownerModal" class="modal">
         <div class="modal-content">
             <div class="modal-header">
-                <span class="close-btn" onclick="closeOwnerModal()" style="position:absolute; right:20px; top:15px; cursor:pointer; font-size:24px; color:white;">&times;</span>
-                <img src="images/owner.jpg" alt="Chairman" style="width:100px; height:100px; border-radius:50%; border:3px solid white; object-fit:cover; margin-bottom:10px;" onerror="this.src='https://cdn-icons-png.flaticon.com/512/387/387561.png'">
-                <h2 id="mdl-name"> মো: নাজমুস সাকিব</h2>
-                <p id="mdl-title" style="opacity:0.9; font-weight:bold;">চেয়ারম্যান </p>
+                <span class="close-btn" onclick="closeOwnerModal()">&times;</span>
+                <img src="images/owner.jpg" style="width:100px; height:100px; border-radius:50%; border:4px solid white; object-fit:cover; margin-bottom:10px;">
+                <h2 id="mdl-name">  মো:নাজমুস সাকিব</h2>
+                <p id="mdl-title">চেয়ারম্যান</p>
             </div>
             <div class="modal-body">
                 <div style="text-align:left; background:rgba(0, 168, 181, 0.05); padding:20px; border-radius:20px; font-size:14px;">
-                    <p style="margin-bottom:10px;"><i class="fas fa-hospital" style="color:var(--primary);"></i> <span id="mdl-hosp">পেশেন্ট কেয়ার হাসপাতাল এন্ড ডায়াগনস্টিক সেন্টার</span></p>
-                    <p style="margin:10px 0;"><i class="fas fa-map-marker-alt" style="color:var(--primary);"></i> <span id="mdl-addr"> কলেজ রোড, বরগুনা</span></p>
-                    <p><i class="fas fa-phone-alt" style="color:var(--primary);"></i> ০১৯১১১১৪৫৩৪</p>
+                    <p style="margin-bottom:12px;"><i class="fas fa-hospital" style="color:var(--primary); width:25px;"></i> <span id="mdl-hosp">পেশেন্ট কেয়ার হাসপাতাল এন্ড ডায়াগনস্টিক সেন্টার</span></p>
+                    <p style="margin:10px 0;"><i class="fas fa-map-marker-alt" style="color:var(--primary); width:25px;"></i> <span id="mdl-addr">  কলেজ রোড, বরগুনা</span></p>
+                    <p><i class="fas fa-phone-alt" style="color:var(--primary); width:25px;"></i> ০১৯১১১১৪৫৩৪</p>
                 </div>
             </div>
         </div>
     </div>
 
     <script>
-        // Language Logic
+        // Theme & Language Script
         const translations = {
-            bn: {
-                hTitle: "পেশেন্ট কেয়ার হাসপাতাল এন্ড ডায়াগনস্টিক সেন্টার", hSub: "চেয়ারম্যান অ্যাডমিন কন্ট্রোল ড্যাশবোর্ড",
-                navHistory: "ইতিহাস", navInspect: "পরিদর্শন", themeDark: "ডার্ক মোড", themeLight: "লাইট মোড",
-                statActive: "একটিভ ফিডব্যাক", statPraise: "প্রশংসা 😊", statComplaint: "অভিযোগ 😟", statVisit: "পরিদর্শন",
-                qrTitle: "Dynamic QR Settings", qrPrint: "অফিসিয়াল পোস্টার প্রিন্ট করুন",
-                secFeedback: "রোগীদের ফিডব্যাক তালিকা", ownerTag: "CHAIRMAN", ownerName: "ডাঃ মো: নাজমুস সাকিব",
-                mdlName: "ডাঃ মো: নাজমুস সাকিব", mdlTitle: "চেয়ারম্যান", mdlHosp: "পেশেন্ট কেয়ার হাসপাতাল", mdlAddr: "দীনু মঞ্জিল, কলেজ রোড, বরগুনা"
-            },
-            en: {
-                hTitle: "Patient Care Hospital & Diagnostic Centre", hSub: "Chairman Admin Dashboard",
-                navHistory: "History", navInspect: "Inspection", themeDark: "Dark Mode", themeLight: "Light Mode",
-                statActive: "Active Feedbacks", statPraise: "Total Praise 😊", statComplaint: "Complaints 😟", statVisit: "Inspections",
-                qrTitle: "Dynamic QR Settings", qrPrint: "Print Official Poster",
-                secFeedback: "Patient Feedback List", ownerTag: "CHAIRMAN", ownerName: "Dr. Md. Nazmus Sakib",
-                mdlName: "Dr. Md. Nazmus Sakib", mdlTitle: "Chairman & Physician", mdlHosp: "Patient Care Hospital", mdlAddr: "Dinu Manzil, College Road, Barguna"
-            }
+            bn: { navHistory: "ইতিহাস", navInspect: "পরিদর্শন", themeDark: "ডার্ক মোড", themeLight: "লাইট মোড", statActive: "একটিভ ফিডব্যাক", statPraise: "প্রশংসা 😊", statComplaint: "অভিযোগ 😟", statVisit: "পরিদর্শন" },
+            en: { navHistory: "History", navInspect: "Inspection", themeDark: "Dark Mode", themeLight: "Light Mode", statActive: "Active Feedbacks", statPraise: "Praise 😊", statComplaint: "Complaints 😟", statVisit: "Inspections" }
         };
 
         function changeAdminLang() {
             const lang = document.getElementById('langSelector').value;
             const t = translations[lang];
-            document.getElementById('txt-h-title').innerText = t.hTitle;
-            document.getElementById('txt-h-sub').innerText = t.hSub;
             document.getElementById('txt-nav-history').innerText = t.navHistory;
             document.getElementById('txt-nav-inspect').innerText = t.navInspect;
             document.getElementById('theme-text').innerText = (document.body.classList.contains('dark-mode')) ? t.themeLight : t.themeDark;
@@ -310,32 +328,24 @@ $inspections_result = mysqli_query($conn, "SELECT * FROM hospital_inspections WH
             document.getElementById('txt-stat-praise').innerText = t.statPraise;
             document.getElementById('txt-stat-complaint').innerText = t.statComplaint;
             document.getElementById('txt-stat-visit').innerText = t.statVisit;
-            document.getElementById('txt-qr-title').innerText = t.qrTitle;
-            document.getElementById('txt-qr-print').innerText = t.qrPrint;
-            document.getElementById('txt-sec-feedback').innerText = t.secFeedback;
-            document.getElementById('txt-owner-tag').innerText = t.ownerTag;
-            document.getElementById('txt-owner-name').innerText = t.ownerName;
-            document.getElementById('mdl-name').innerText = t.mdlName;
-            document.getElementById('mdl-title').innerText = t.mdlTitle;
-            document.getElementById('mdl-hosp').innerText = t.mdlHosp;
-            document.getElementById('mdl-addr').innerText = t.mdlAddr;
         }
 
-        // Dark Mode Logic
-        document.addEventListener('DOMContentLoaded', () => {
-            if (localStorage.getItem('theme') === 'dark') { document.body.classList.add('dark-mode'); updateThemeUI(true); }
-        });
         function toggleDarkMode() {
             const isDark = document.body.classList.toggle('dark-mode');
             localStorage.setItem('theme', isDark ? 'dark' : 'light');
             updateThemeUI(isDark);
         }
+
         function updateThemeUI(isDark) {
             const icon = document.getElementById('theme-icon');
             icon.className = isDark ? 'fas fa-sun' : 'fas fa-moon';
             const lang = document.getElementById('langSelector').value;
             document.getElementById('theme-text').innerText = isDark ? translations[lang].themeLight : translations[lang].themeDark;
         }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            if (localStorage.getItem('theme') === 'dark') { document.body.classList.add('dark-mode'); updateThemeUI(true); }
+        });
 
         // Clock
         function updateClock() {
@@ -356,14 +366,13 @@ $inspections_result = mysqli_query($conn, "SELECT * FROM hospital_inspections WH
         window.onclick = (e) => { if (e.target == document.getElementById("ownerModal")) closeOwnerModal(); }
 
         var siteUrl = window.location.origin + window.location.pathname.replace('admin.php', 'qr.php'); 
-        var qrcode = new QRCode(document.getElementById("qrcode"), { text: siteUrl, width: 140, height: 140 });
-
+        var qrcode = new QRCode(document.getElementById("qrcode"), { text: siteUrl, width: 130, height: 130 });
         function downloadQR() { 
             var canvas = document.querySelector('#qrcode canvas'); 
             if(canvas) {
                 var link = document.createElement('a'); 
                 link.href = canvas.toDataURL("image/png"); 
-                link.download = 'pcare_qr.png'; link.click(); 
+                link.download = 'pc_qr.png'; link.click(); 
             }
         }
     </script>
